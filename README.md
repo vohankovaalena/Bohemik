@@ -21,9 +21,12 @@ a otevřít http://localhost:8123
 
 ## Nasazení na GitHub Pages
 
-1. Vytvořit repozitář na GitHubu a nahrát do něj tuto složku.
-2. Na GitHubu: **Settings → Pages → Build and deployment → Source: Deploy from a branch**, větev `main`, složka `/docs`.
-3. Web poběží na `https://<uživatel>.github.io/<repozitář>/`, návrhy na `…/templates/`.
+Repozitář: https://github.com/vohankovaalena/Bohemik
+
+Web se nasazuje automaticky při každém pushi do `main` workflowem `.github/workflows/pages.yml`, který publikuje složku `docs/`. V nastavení repozitáře musí být **Settings → Pages → Source: GitHub Actions**.
+
+- Web: https://vohankovaalena.github.io/Bohemik/
+- Návrhy: https://vohankovaalena.github.io/Bohemik/templates/
 
 ## Před spuštěním na bohemik.cz
 

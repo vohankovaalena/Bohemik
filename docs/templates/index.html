@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Návrhy designu – bohemik.</title>
+<link rel="stylesheet" href="../assets/base.css">
+<style>
+  body { background: var(--bezova); color: var(--cerna); font: 400 17px/1.6 var(--clash); }
+  .wrap { width: min(1240px, 100% - 48px); margin-inline: auto; }
+  header { padding: 56px 0 24px; }
+  header .logo { font-size: 44px; }
+  h1 { font-weight: 700; font-size: clamp(36px, 5vw, 64px); line-height: 1.05; letter-spacing: -0.02em; margin: 26px 0 16px; }
+  .lead { font-size: 20px; max-width: 760px; }
+  h2 { font-weight: 700; font-size: 30px; margin: 72px 0 22px; }
+  .aud { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .aud div { background: var(--bila); border-radius: 14px; padding: 22px; font-size: 15.5px; }
+  .aud b { display: block; font-size: 18px; line-height: 1.25; margin-bottom: 8px; }
+  .aud .need { color: var(--hneda); font-weight: 600; display: block; margin-top: 10px; }
+  .rules { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 40px; margin-top: 18px; }
+  .rules li { padding: 8px 0 8px 22px; position: relative; border-bottom: 1px solid rgba(37,37,37,.12); }
+  .rules li::before { content: ""; position: absolute; left: 0; top: 18px; width: 10px; height: 2px; background: var(--cervena); }
+  .cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+  .card { background: var(--bila); border-radius: 18px; overflow: hidden; text-decoration: none; display: flex; flex-direction: column; transition: transform .25s, box-shadow .25s; }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 20px 44px rgba(37,37,37,.12); }
+  .thumb { aspect-ratio: 16 / 10; overflow: hidden; position: relative; border-bottom: 1px solid rgba(37,37,37,.1); }
+  .thumb iframe { position: absolute; top: 0; left: 0; width: 1440px; height: 900px; border: 0; transform-origin: 0 0; pointer-events: none; }
+  .body { padding: 22px 26px 26px; }
+  .body h3 { font-weight: 700; font-size: 26px; display: flex; gap: 12px; align-items: baseline; }
+  .body h3 span { color: var(--cervena); }
+  .body p { margin-top: 6px; }
+  .pc { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 14px; font-size: 15px; }
+  .pc b { display: block; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--hneda); }
+  .fit { margin-top: 14px; font-size: 15px; background: var(--bezova); border-radius: 10px; padding: 10px 14px; }
+  .note { background: var(--modra); border-radius: 18px; padding: 28px 32px; margin: 64px 0 100px; }
+  .note h2 { margin: 0 0 12px; font-size: 24px; }
+  .note li { padding: 4px 0 4px 20px; position: relative; }
+  .note li::before { content: "–"; position: absolute; left: 0; }
+  .tip { background: var(--cerna); color: var(--bezova); border-radius: 18px; padding: 28px 32px; margin-top: 28px; }
+  .tip b { color: var(--cervena); }
+  .card--top { grid-column: 1 / -1; display: grid; grid-template-columns: 1.25fr 1fr; outline: 3px solid var(--cervena); outline-offset: -3px; }
+  .card--top .thumb { border-bottom: 0; border-right: 1px solid rgba(37,37,37,.1); aspect-ratio: auto; min-height: 380px; }
+  .card--top .thumb iframe { height: 1800px; }
+  .card--top .body { align-self: center; padding: 32px 36px; }
+  .badge { display: inline-block; background: var(--cervena); color: var(--cerna); font-weight: 600; font-size: 13px; padding: 5px 12px; border-radius: 999px; margin-bottom: 12px; }
+  .mix { margin-top: 14px; font-size: 15px; }
+  .mix li { padding: 5px 0; border-bottom: 1px solid rgba(37,37,37,.1); }
+  .mix b { color: var(--hneda); }
+  @media (max-width: 900px) { .aud, .cards, .rules, .pc, .card--top { grid-template-columns: 1fr; } .card--top .thumb { aspect-ratio: 16 / 10; min-height: 0; border-right: 0; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="logo">bohemik.</span>
+    <h1>Návrhy designu nového webu</h1>
+    <p class="lead">Šest směrů, doporučená kombinace a prodejní varianta postavená na největších zakázkách. Každá varianta je hotová úvodní stránka se skutečnými fotkami, logy a texty z podkladů. Klikněte na náhled, varianta se otevře celá. Dole na stránce je přepínač 1–8, mezi variantami jde listovat i šipkami ← →. Vyzkoušejte i úzké okno, všechny varianty fungují na mobilu.</p>
+  </header>
+
+  <h2>Pro koho web je</h2>
+  <div class="aud">
+    <div><b>Zadavatelé veřejných zakázek</b>Investiční a technické odbory nemocnic, měst a státních institucí. Web otevírají v kanceláři na počítači, když prověřují dodavatele.<span class="need">Chtějí: reference podobných staveb, rozsah prací, důvěryhodnost</span></div>
+    <div><b>Správci budov</b>Provozní a techničtí pracovníci objektů, kde Bohemik dodal vzduchotechniku.<span class="need">Chtějí: hned najít telefon na servisní dispečink</span></div>
+    <div><b>Uchazeči o práci</b>Stavbyvedoucí, rozpočtáři, instalatéři. Na web chodí většinou z mobilu, často z inzerátu.<span class="need">Chtějí: poznat atmosféru firmy, rychle vidět volné pozice</span></div>
+    <div><b>Partneři a subdodavatelé</b>Projektanti, subdodavatelé, dodavatelé materiálu.<span class="need">Chtějí: kontakty, fakturační údaje, obor činnosti</span></div>
+  </div>
+  <ul class="rules">
+    <li>Reference musí být vidět do dvou obrazovek, jsou to hlavní argumenty pro zadavatele.</li>
+    <li>Servisní linka je dostupná z každé stránky.</li>
+    <li>Střídmé animace, žádné efekty, které by u úředníka působily nevážně.</li>
+    <li>Červenou používáme jen na velké písmo a akcenty, na běžném textu je málo kontrastní.</li>
+    <li>Na mobilu se všechno skládá do jednoho sloupce, nic se neschovává.</li>
+    <li>Ilustrace dodávají lidský tón, hlavně kariéře.</li>
+  </ul>
+
+  <h2>Varianty</h2>
+  <div class="cards">
+    <a class="card card--top" href="varianta-7.html"><div class="thumb"><iframe src="varianta-7.html" tabindex="-1" title="Náhled varianty 7"></iframe></div><div class="body">
+      <span class="badge">Doporučená</span>
+      <h3><span>7</span>Doporučená kombinace</h3><p>Vychází z návrhu v PDF, takže zůstává všechno, co si Bohemik představuje. K tomu přidává prvky, které ostatní varianty ověřily:</p>
+      <ul class="mix">
+        <li><b>Z varianty 1:</b> barvy, velké logo, fotka s modrým boxem, modré karty s čísly, mřížka referencí 3×2</li>
+        <li><b>Z varianty 4:</b> tři oblasti činnosti a filtr referencí podle kategorií</li>
+        <li><b>Z varianty 3:</b> tmavý pruh se servisní linkou a telefon na servis v hlavičce</li>
+        <li><b>Z varianty 5:</b> ilustrované postavičky v sekci Kariéra</li>
+      </ul>
+      <div class="fit">Jen jedno písmo (Clash Display), hostované přímo na webu bez Google Fonts</div></div></a>
+    <a class="card card--top" href="varianta-8.html"><div class="thumb"><iframe src="varianta-8.html" tabindex="-1" title="Náhled varianty 8"></iframe></div><div class="body">
+      <span class="badge">Prodejní</span>
+      <h3><span>8</span>Zakázky na prvním místě</h3><p>Web jako obchodní nabídka. Hned po otevření ukazuje velké stavby a investory, ne popis firmy:</p>
+      <ul class="mix">
+        <li><b>Hero:</b> prolínají se fotky skutečných zakázek (ČNB, Rakovník, Planetárium, Kralupy) s popiskem</li>
+        <li><b>Čísla:</b> 29 zakázek, 15 investorů, 13 zakázek ve zdravotnictví, ISO 9001 a 14001</li>
+        <li><b>Vlajkové zakázky:</b> Nemocnice Na Homolce (6 zakázek) a ČNB (4) velkoformátově, se seznamem prací</li>
+        <li><b>Seznam referenčních zakázek:</b> kompletní tabulka s filtrem podle oboru, jak ji potřebuje hodnoticí komise</li>
+        <li><b>Poptávka:</b> formulář s typem zakázky a odkazem na zadávací dokumentaci. Servis a kariéra až na konci</li>
+      </ul>
+      <div class="fit">Nejvíc sedí: zadavatelům velkých veřejných zakázek</div></div></a>
+    <a class="card" href="varianta-1.html"><div class="thumb"><iframe src="varianta-1.html" tabindex="-1" title="Náhled varianty 1"></iframe></div><div class="body">
+      <h3><span>1</span>Podle návrhu</h3><p>Věrně rozpracovaný návrh z PDF: béžová, velké červené logo, fotka přes celou šířku s modrým boxem, modré karty s čísly.</p>
+      <div class="pc"><div><b>Plus</b>Nejblíž tomu, co si Bohemik představuje. Klidné, čisté, bez zbytečností.</div><div><b>Mínus</b>Méně výrazné. Spíš hezká vizitka než silný první dojem.</div></div>
+      <div class="fit">Nejvíc sedí: zadavatelům, kteří chtějí jednoduchost</div></div></a>
+    <a class="card" href="varianta-2.html"><div class="thumb"><iframe src="varianta-2.html" tabindex="-1" title="Náhled varianty 2"></iframe></div><div class="body">
+      <h3><span>2</span>Redakční</h3><p>Velká typografie, tenké linky a číslované sekce jako v architektonickém časopise. Reference jako seznam s náhledy.</p>
+      <div class="pc"><div><b>Plus</b>Moderní a sebejisté, působí jako větší firma. Skvělé na desktopu.</div><div><b>Mínus</b>Málo barevné, fotky v referencích jsou až do najetí myší šedé.</div></div>
+      <div class="fit">Nejvíc sedí: zadavatelům a projektantům</div></div></a>
+    <a class="card" href="varianta-3.html"><div class="thumb"><iframe src="varianta-3.html" tabindex="-1" title="Náhled varianty 3"></iframe></div><div class="body">
+      <h3><span>3</span>Industriální</h3><p>Tmavý web navazující na černou budovu z fotky. Červená jako signální barva, výrazný pruh se servisní linkou.</p>
+      <div class="pc"><div><b>Plus</b>Nejsilnější první dojem. Servis VZT je okamžitě na očích.</div><div><b>Mínus</b>Pro konzervativní zadavatele méně „bezpečný“. Béžová z podkladů ustupuje.</div></div>
+      <div class="fit">Nejvíc sedí: správcům budov a technikům</div></div></a>
+    <a class="card" href="varianta-4.html"><div class="thumb"><iframe src="varianta-4.html" tabindex="-1" title="Náhled varianty 4"></iframe></div><div class="body">
+      <h3><span>4</span>Přehledná</h3><p>Pragmatická: horní lišta s telefony, tři pilíře činnosti, filtr referencí, kariéra a formulář přímo na úvodní stránce.</p>
+      <div class="pc"><div><b>Plus</b>Nejrychleji odpoví na všechny otázky. Nejblíž stylu pohl.cz.</div><div><b>Mínus</b>Nejméně originální. Vypadá jako solidní firemní web, ne jako značka.</div></div>
+      <div class="fit">Nejvíc sedí: všem skupinám zároveň</div></div></a>
+    <a class="card" href="varianta-5.html"><div class="thumb"><iframe src="varianta-5.html" tabindex="-1" title="Náhled varianty 5"></iframe></div><div class="body">
+      <h3><span>5</span>Ilustrovaná</h3><p>Postavičky z podkladů jako hlas značky, zaoblené tvary a lidský tón. Fotky zůstávají jako důkaz kvality.</p>
+      <div class="pc"><div><b>Plus</b>Odliší se od všech stavebních firem. Výborné pro nábor lidí.</div><div><b>Mínus</b>Pro část zadavatelů může být až moc hravá.</div></div>
+      <div class="fit">Nejvíc sedí: uchazečům o práci</div></div></a>
+    <a class="card" href="varianta-6.html"><div class="thumb"><iframe src="varianta-6.html" tabindex="-1" title="Náhled varianty 6"></iframe></div><div class="body">
+      <h3><span>6</span>Technický výkres</h3><p>Rastr, kóty, rohové značky a razítko. Reference jako výkresové listy s technickými údaji.</p>
+      <div class="pc"><div><b>Plus</b>Mluví řečí techniků a projektantů, sedí k TZB. Využívá všech pět barev.</div><div><b>Mínus</b>Nejvíc „konceptuální“. Detailům se musí věnovat péče i při dalším rozšiřování.</div></div>
+      <div class="fit">Nejvíc sedí: technickým odborům a projektantům</div></div></a>
+  </div>
+
+  <div class="tip"><b>Doporučení:</b> varianta 7 spojuje to nejlepší z ostatních. Je důvěryhodná pro zadavatele, servis VZT má na očích a kariéře dodává lidský tón. Prvky jde dál prohazovat, třeba vzít hero s fotkou přes celou obrazovku z varianty 3.</div>
+
+  <div class="note">
+    <h2>Co je v návrzích zatím provizorní</h2>
+    <ul>
+      <li>Logo je zatím vysázené písmem. Pro ostrý web potřebujeme logo jako SVG.</li>
+      <li>Varianta 8: tvrzení „technologie děláme sami“, „osvědčení investorů doložíme“ a „zhruba dvě desítky zaměstnanců“ musí Bohemik potvrdit. Čísla 29 zakázek, 15 investorů a 13 ve zdravotnictví jsou spočítaná z výpisu referencí na současném webu.</li>
+      <li>Čísla „xx“ (zaměstnanci, roky na trhu) doplní Bohemik. Ve výpisu na současném webu je 29 zakázek, takže „30+“ je trochu nadsazené, pokud Bohemik nemá další.</li>
+      <li>Slogan „Stavíme, modernizujeme, servisujeme.“ je návrh. V podkladech je „modernizujeme“ dvakrát.</li>
+      <li>Fotky, loga a ilustrace jsou vytažené z PDF v nižším rozlišení. Ilustrace potřebujeme jako SVG.</li>
+      <li>Varianty 2, 4 a 6 zkouší k Clash Display druhé písmo na text (Inter, JetBrains Mono). Na ostrém webu by bylo uložené přímo na webu, ne načítané z Googlu.</li>
+    </ul>
+  </div>
+</div>
+<script>
+  // Zmenšení živých náhledů na šířku karty
+  const fit = () => document.querySelectorAll(".thumb").forEach((t) => {
+    t.querySelector("iframe").style.transform = `scale(${t.clientWidth / 1440})`;
+  });
+  addEventListener("resize", fit); fit();
+</script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Varianta 1 · Podle návrhu – bohemik.</title>
+<link rel="stylesheet" href="../assets/base.css">
+<style>
+  body { background: var(--bezova); color: var(--cerna); font: 500 18px/1.55 var(--clash); }
+  .wrap { width: min(1200px, 100% - 48px); margin-inline: auto; }
+
+  /* Hlavička */
+  .header { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 36px 0 32px; }
+  .header .logo { font-size: clamp(40px, 6vw, 68px); }
+  .nav { display: flex; align-items: center; gap: 36px; }
+  .nav a { font-weight: 700; font-size: 19px; text-decoration: none; position: relative; }
+  .nav a::after { content: ""; position: absolute; left: 0; right: 100%; bottom: -4px; height: 3px; background: var(--cervena); transition: right .25s; }
+  .nav a:hover::after { right: 0; }
+  .nav .ig { display: inline-flex; }
+  .nav .ig::after { display: none; }
+  .nav .ig svg { width: 28px; height: 28px; }
+
+  /* Hero */
+  .hero { position: relative; height: min(78vh, 720px); min-height: 460px; }
+  .hero img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; }
+  .hero__box { position: absolute; top: 40px; right: 24px; max-width: 640px; background: rgba(194, 206, 214, .92); padding: 22px 32px; text-align: center; font-weight: 700; font-size: clamp(19px, 2vw, 25px); line-height: 1.35; }
+
+  /* Pás log */
+  .clients { display: flex; align-items: center; gap: 40px; padding: 30px 0; }
+  .clients__label { flex: none; font-weight: 700; font-size: 20px; }
+  .clients .marquee { flex: 1; }
+  .clients .marquee__track { gap: 72px; }
+  .clients img { height: 64px; width: auto; }
+
+  /* O nás */
+  .about { padding: 120px 0 40px; text-align: center; }
+  .about p { font-weight: 700; font-size: clamp(20px, 2.3vw, 28px); line-height: 1.45; max-width: 960px; margin-inline: auto; }
+  .about p + p { margin-top: 36px; }
+  .about a { text-decoration-thickness: 2px; text-underline-offset: 5px; }
+  .about a:hover { color: var(--hneda); }
+  .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; padding: 90px 0 70px; }
+  .fact { background: var(--modra); border-radius: 22px; padding: 38px 24px; text-align: center; font-weight: 700; font-size: 22px; line-height: 1.3; }
+  .fact strong { color: var(--cervena); font-size: 1.15em; }
+  .slogan { text-align: center; font-weight: 700; font-size: clamp(24px, 3vw, 34px); padding-bottom: 120px; }
+
+  /* Reference */
+  .refs { padding: 20px 0 120px; }
+  .refs h2 { font-weight: 700; font-size: clamp(34px, 4vw, 52px); margin-bottom: 56px; }
+  .refs__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; }
+  .ref { text-decoration: none; display: block; }
+  .ref__img { position: relative; aspect-ratio: 1; overflow: hidden; }
+  .ref__img img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
+  .ref__info { position: absolute; inset: auto 0 0 0; background: rgba(194, 206, 214, .95); padding: 18px 20px; font-size: 16px; line-height: 1.4; transform: translateY(100%); transition: transform .3s; }
+  .ref__info small { display: block; font-weight: 600; color: var(--hneda); text-transform: uppercase; letter-spacing: .06em; font-size: 12px; margin-bottom: 4px; }
+  .ref:hover .ref__img img, .ref:focus-visible .ref__img img { transform: scale(1.04); }
+  .ref:hover .ref__info, .ref:focus-visible .ref__info { transform: none; }
+  .ref h3 { font-weight: 700; font-size: 24px; margin-top: 16px; }
+  .more { display: inline-block; margin-top: 56px; font-weight: 700; font-size: 20px; text-decoration: none; border-bottom: 3px solid var(--cervena); padding-bottom: 4px; }
+
+  /* Patička */
+  .footer { background: var(--cerna); color: var(--bezova); padding: 72px 0 96px; font-size: 16px; }
+  .footer .logo { font-size: 44px; }
+  .footer__grid { display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr; gap: 32px; }
+  .footer h4 { font-weight: 600; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--modra); margin-bottom: 12px; }
+  .footer a { text-decoration: none; }
+  .footer a:hover { color: var(--cervena); }
+  .footer__legal { margin-top: 56px; padding-top: 20px; border-top: 1px solid rgba(237,235,232,.2); display: flex; justify-content: space-between; gap: 16px; font-size: 14px; opacity: .7; flex-wrap: wrap; }
+
+  @media (max-width: 860px) {
+    .header { padding: 20px 0; flex-wrap: wrap; }
+    .nav { flex-direction: column; align-items: flex-start; gap: 18px; width: 100%; padding: 12px 0 8px; }
+    .hero { height: 70vh; }
+    .hero__box { left: 16px; right: 16px; top: auto; bottom: 16px; padding: 16px 18px; }
+    .clients { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .clients .marquee { width: 100%; }
+    .clients img { height: 48px; }
+    .about { padding-top: 72px; }
+    .facts, .refs__grid { grid-template-columns: 1fr; gap: 18px; }
+    .facts { padding: 56px 0; }
+    .ref__info { transform: none; position: static; }
+    .footer__grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="header">
+    <a class="logo" href="#">bohemik.</a>
+    <button class="nav-toggle" aria-expanded="false" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M3 7h18M3 12h18M3 17h18"/></svg></button>
+    <nav class="nav" data-nav>
+      <a href="#">o nás</a>
+      <a href="#">reference</a>
+      <a href="#">kariéra</a>
+      <a href="#">kontakt</a>
+      <a class="ig" href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+    </nav>
+  </header>
+</div>
+
+<section class="hero">
+  <img src="../assets/img/hero.jpg" alt="Moderní budova s černým obkladem a zahradou za soumraku">
+  <h1 class="hero__box">Jsme česká stavební firma. Realizujeme generální dodávky veřejných zakázek a&nbsp;TZB. Zajišťujeme servis VZT.</h1>
+</section>
+
+<div class="wrap">
+  <section class="clients" aria-label="Klienti">
+    <span class="clients__label">důvěřují nám:</span>
+    <div class="marquee"><div class="marquee__track">
+      <img src="../assets/img/logos/cnb.png" alt="Česká národní banka"><img src="../assets/img/logos/rakovnik.png" alt="Masarykova nemocnice Rakovník"><img src="../assets/img/logos/slany.png" alt="Královské město Slaný"><img src="../assets/img/logos/motol.png" alt="Fakultní nemocnice Motol a Homolka">
+      <img src="../assets/img/logos/cnb.png" alt=""><img src="../assets/img/logos/rakovnik.png" alt=""><img src="../assets/img/logos/slany.png" alt=""><img src="../assets/img/logos/motol.png" alt="">
+      <img src="../assets/img/logos/cnb.png" alt=""><img src="../assets/img/logos/rakovnik.png" alt=""><img src="../assets/img/logos/slany.png" alt=""><img src="../assets/img/logos/motol.png" alt="">
+      <img src="../assets/img/logos/cnb.png" alt=""><img src="../assets/img/logos/rakovnik.png" alt=""><img src="../assets/img/logos/slany.png" alt=""><img src="../assets/img/logos/motol.png" alt="">
+    </div></div>
+  </section>
+
+  <section class="about">
+    <p>Jsme generální dodavatel <a href="#">veřejných zakázek</a> – realizujeme stavby, rekonstrukce a přestavby objektů občanské vybavenosti.</p>
+    <p>Zakázky <a href="#">TZB</a> – VZT, chlazení, MaR, ZTI.<br>Zajišťujeme servis VZT na námi realizovaných zakázkách.</p>
+    <div class="facts">
+      <div class="fact"><strong>30+</strong> realizovaných zakázek</div>
+      <div class="fact"><strong>xx</strong> zaměstnanců</div>
+      <div class="fact"><strong>xx</strong> let na trhu</div>
+    </div>
+    <p class="slogan">Stavíme, modernizujeme, servisujeme.</p>
+  </section>
+
+  <section class="refs">
+    <h2>reference:</h2>
+    <div class="refs__grid">
+      <a class="ref" href="#"><div class="ref__img"><img src="../assets/img/ref/homolka.jpg" alt=""><div class="ref__info"><small>Veřejné zakázky · 2021–dosud</small>Stavební úpravy pracovišť včetně technologií</div></div><h3>Nemocnice Na Homolce</h3></a>
+      <a class="ref" href="#"><div class="ref__img"><img src="../assets/img/ref/planetarium.jpg" alt=""><div class="ref__info"><small>TZB · 2025</small>Rekonstrukce VZT, klimatizace, vytápění a MaR</div></div><h3>Planetárium Praha</h3></a>
+      <a class="ref" href="#"><div class="ref__img"><img src="../assets/img/ref/cnb.jpg" alt=""><div class="ref__info"><small>Veřejné zakázky · 2020–dosud</small>Výměna VZT jednotek, chlazení centrály, bezbariérový vstup</div></div><h3>ČNB Praha</h3></a>
+    </div>
+    <a class="more" href="#">všechny reference →</a>
+  </section>
+</div>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__grid">
+      <div><a class="logo" href="#">bohemik.</a></div>
+      <div><h4>Kontakt</h4>Pražská 636<br>263 01 Dobříš<br><a href="tel:+420326722707">+420 326 722 707</a><br><a href="mailto:info@bohemik.cz">info@bohemik.cz</a></div>
+      <div><h4>Servis VZT</h4><a href="tel:+420725309691">+420 725 309 691</a><br><a href="mailto:servis@bohemik.cz">servis@bohemik.cz</a></div>
+      <div><h4>Web</h4><a href="#">o nás</a><br><a href="#">reference</a><br><a href="#">kariéra</a><br><a href="#">kontakt</a></div>
+    </div>
+    <div class="footer__legal"><span>Bohemik s.r.o. · IČ 24265021 · DIČ CZ24265021</span><a href="#">Ochrana osobních údajů</a></div>
+  </div>
+</footer>
+
+<script src="../assets/base.js"></script>
+</body>
+</html>

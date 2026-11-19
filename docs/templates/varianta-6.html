@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Varianta 6 · Technický výkres – bohemik.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="../assets/base.css">
+<style>
+  /* Technický výkres: rastr, kóty, rohové značky, razítko – řeč projektantů a techniků TZB */
+  :root { --grid: rgba(115, 52, 43, .09); --ink: var(--cerna); --mono: "JetBrains Mono", ui-monospace, monospace; }
+  body { background: var(--bezova); color: var(--ink); font: 500 17px/1.6 var(--clash); }
+  .wrap { width: min(1280px, 100% - 48px); margin-inline: auto; }
+  .mono { font: 400 12.5px/1.4 var(--mono); letter-spacing: .04em; text-transform: uppercase; }
+  .blueprint { background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px); background-size: 32px 32px; }
+  .frame { border: 1.5px solid var(--ink); }
+  .ticks { position: relative; }
+  .ticks::before, .ticks::after { content: ""; position: absolute; width: 18px; height: 18px; border: 2px solid var(--cervena); z-index: 2; pointer-events: none; }
+  .ticks::before { top: -6px; left: -6px; border-right: 0; border-bottom: 0; }
+  .ticks::after { bottom: -6px; right: -6px; border-left: 0; border-top: 0; }
+
+  .header { border-bottom: 1.5px solid var(--ink); }
+  .header .wrap { display: flex; align-items: stretch; justify-content: space-between; }
+  .header .logo { font-size: 38px; padding: 20px 0; }
+  .nav { display: flex; }
+  .nav a { display: flex; align-items: center; gap: 10px; padding: 0 26px; border-left: 1.5px solid var(--ink); text-decoration: none; font-weight: 600; }
+  .nav a .mono { color: var(--hneda); }
+  .nav a:hover { background: var(--cerna); color: var(--bezova); }
+  .nav a:hover .mono { color: var(--cervena); }
+
+  .hero { padding: 64px 0 72px; }
+  .hero .wrap { display: grid; grid-template-columns: 1fr 1.15fr; gap: 56px; align-items: start; }
+  .hero .mono { color: var(--hneda); }
+  .hero .wrap > * { min-width: 0; }
+  .hero h1 { font-weight: 700; font-size: clamp(34px, 5.6vw, 84px); line-height: 1; letter-spacing: -0.03em; margin: 18px 0 26px; }
+  .hero h1 span { color: var(--cervena); }
+  .hero p { font-size: 20px; max-width: 500px; }
+  .hero__cta { display: flex; gap: 0; margin-top: 36px; }
+  .hero__cta a { padding: 16px 24px; text-decoration: none; font-weight: 600; border: 1.5px solid var(--ink); }
+  .hero__cta a:first-child { background: var(--cerna); color: var(--bezova); }
+  .hero__cta a + a { border-left: 0; }
+  .hero__cta a:hover { background: var(--cervena); color: var(--cerna); }
+  .hero__fig { position: relative; padding: 0 0 46px 0; }
+  .hero__fig img { width: 100%; aspect-ratio: 4/3; object-fit: cover; object-position: 30% 60%; }
+  .dim { position: absolute; left: 0; right: 0; bottom: 12px; display: flex; align-items: center; gap: 10px; color: var(--hneda); }
+  .dim::before, .dim::after { content: ""; flex: 1; height: 1px; background: var(--hneda); }
+  .dim span { flex: none; }
+  .stamp { position: absolute; right: -16px; bottom: 60px; background: var(--bezova); display: grid; grid-template-columns: auto auto; font: 400 12px/1.3 var(--mono); text-transform: uppercase; z-index: 3; }
+  .stamp > div { padding: 7px 12px; border-right: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); }
+  .stamp > div:nth-child(2n) { border-right: 0; }
+  .stamp > div:nth-last-child(-n+2) { border-bottom: 0; }
+  .stamp b { display: block; font: 600 15px/1.2 var(--clash); text-transform: none; }
+
+  .clients { border-block: 1.5px solid var(--ink); display: grid; grid-template-columns: 220px 1fr; }
+  .clients .mono { display: flex; align-items: center; padding: 0 24px; border-right: 1.5px solid var(--ink); color: var(--hneda); }
+  .clients .marquee { padding: 24px 0; }
+  .clients .marquee__track { gap: 80px; }
+  .clients img { height: 48px; width: auto; mix-blend-mode: multiply; }
+
+  .section { padding: 110px 0; }
+  .sh { display: flex; align-items: baseline; gap: 18px; padding-bottom: 18px; border-bottom: 1.5px solid var(--ink); margin-bottom: 52px; }
+  .sh .mono { color: var(--cervena); font-size: 14px; }
+  .sh h2 { font-weight: 700; font-size: clamp(32px, 4vw, 54px); letter-spacing: -0.02em; line-height: 1; }
+  .sh .r { margin-left: auto; color: var(--hneda); }
+
+  .about { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+  .about p { font-size: 22px; line-height: 1.5; }
+  .about a { color: var(--hneda); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+  .spec { width: 100%; border-collapse: collapse; }
+  .spec th, .spec td { text-align: left; padding: 14px 12px; border: 1.5px solid var(--ink); vertical-align: top; }
+  .spec th { font: 400 12.5px/1.4 var(--mono); text-transform: uppercase; color: var(--hneda); width: 34%; background: rgba(194,206,214,.35); }
+  .spec td { font-weight: 600; }
+
+  .facts { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 80px; border: 1.5px solid var(--ink); }
+  .fact { padding: 30px 28px 26px; position: relative; }
+  .fact + .fact { border-left: 1.5px solid var(--ink); }
+  .fact .mono { color: var(--hneda); }
+  .fact strong { display: block; font-weight: 700; font-size: clamp(60px, 7vw, 104px); line-height: 1; margin: 18px 0 8px; letter-spacing: -0.04em; }
+  .fact strong em { font-style: normal; color: var(--cervena); }
+
+  .sheets { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .sheet { display: block; text-decoration: none; background: var(--bezova); }
+  .sheet__img { position: relative; aspect-ratio: 1; overflow: hidden; border-bottom: 1.5px solid var(--ink); }
+  .sheet__img img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(.85) contrast(1.05); transition: filter .4s; }
+  .sheet:hover .sheet__img img { filter: none; }
+  .sheet__no { position: absolute; top: 0; left: 0; background: var(--cerna); color: var(--bezova); padding: 6px 10px; }
+  .sheet h3 { font-weight: 700; font-size: 23px; padding: 16px 16px 12px; border-bottom: 1.5px solid var(--ink); }
+  .sheet dl { display: grid; grid-template-columns: 90px 1fr; margin: 0; font-size: 15px; }
+  .sheet dt, .sheet dd { margin: 0; padding: 8px 16px; border-bottom: 1px solid rgba(37,37,37,.2); }
+  .sheet dt { font: 400 11.5px/1.9 var(--mono); text-transform: uppercase; color: var(--hneda); border-right: 1px solid rgba(37,37,37,.2); }
+  .sheet dl > :nth-last-child(-n+2) { border-bottom: 0; }
+  .sheet:hover h3 { color: var(--cervena); }
+  .all { display: inline-block; margin-top: 44px; padding: 14px 22px; border: 1.5px solid var(--ink); text-decoration: none; font-weight: 600; }
+  .all:hover { background: var(--cerna); color: var(--bezova); }
+
+  .footer { background: var(--cerna); color: var(--bezova); padding: 70px 0 110px; }
+  .tb { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; border: 1.5px solid rgba(237,235,232,.5); }
+  .tb > div { padding: 20px 22px; border-right: 1.5px solid rgba(237,235,232,.5); }
+  .tb > div:last-child { border-right: 0; }
+  .tb .mono { color: var(--modra); display: block; margin-bottom: 10px; }
+  .tb a { text-decoration: none; }
+  .tb a:hover { color: var(--cervena); }
+  .footer .logo { font-size: 46px; }
+  .footer__legal { display: flex; justify-content: space-between; margin-top: 20px; color: rgba(237,235,232,.6); }
+
+  @media (max-width: 960px) {
+    .hero .wrap, .about, .sheets, .tb { grid-template-columns: 1fr; }
+    .facts { grid-template-columns: 1fr; }
+    .fact + .fact { border-left: 0; border-top: 1.5px solid var(--ink); }
+    .tb > div { border-right: 0; border-bottom: 1.5px solid rgba(237,235,232,.5); }
+    .stamp { right: 0; }
+    .clients { grid-template-columns: 1fr; }
+    .clients .mono { border-right: 0; border-bottom: 1.5px solid var(--ink); padding: 12px 24px; }
+    .section { padding: 80px 0; }
+  }
+  @media (max-width: 860px) {
+    .header .wrap { flex-wrap: wrap; align-items: center; }
+    .nav { flex-direction: column; width: 100%; border-top: 1.5px solid var(--ink); }
+    .nav a { border-left: 0; padding: 14px 0; border-bottom: 1px solid rgba(37,37,37,.2); }
+  }
+</style>
+</head>
+<body>
+
+<header class="header"><div class="wrap">
+  <a class="logo" href="#">bohemik.</a>
+  <button class="nav-toggle" aria-expanded="false" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h18M3 12h18M3 17h18"/></svg></button>
+  <nav class="nav" data-nav><a href="#"><span class="mono">01</span>o nás</a><a href="#"><span class="mono">02</span>reference</a><a href="#"><span class="mono">03</span>kariéra</a><a href="#"><span class="mono">04</span>kontakt</a></nav>
+</div></header>
+
+<section class="hero blueprint"><div class="wrap">
+  <div>
+    <span class="mono">Generální dodávky · TZB · Servis VZT</span>
+    <h1>Stavíme, modernizujeme, <span>servisujeme.</span></h1>
+    <p>Jsme česká stavební firma. Realizujeme generální dodávky veřejných zakázek a TZB. Zajišťujeme servis VZT.</p>
+    <div class="hero__cta"><a href="#">Reference →</a><a href="#">Kontakt</a></div>
+  </div>
+  <figure class="hero__fig">
+    <div class="ticks frame"><img src="../assets/img/hero.jpg" alt="Moderní budova s černým obkladem za soumraku"></div>
+    <div class="stamp frame">
+      <div>Zhotovitel<b>Bohemik s.r.o.</b></div><div>Sídlo<b>Dobříš</b></div>
+      <div>Obor<b>GD + TZB</b></div><div>List<b>01 / 04</b></div>
+    </div>
+    <div class="dim mono"><span>Od projektu po servis</span></div>
+  </figure>
+</div></section>
+
+<section class="clients" aria-label="Klienti">
+  <span class="mono">Důvěřují nám</span>
+  <div class="marquee"><div class="marquee__track">
+    <img src="../assets/img/logos/cnb.png" alt="Česká národní banka"><img src="../assets/img/logos/rakovnik.png" alt="Masarykova nemocnice Rakovník"><img src="../assets/img/logos/slany.png" alt="Královské město Slaný"><img src="../assets/img/logos/motol.png" alt="FN Motol a Homolka">
+    <img src="../assets/img/logos/cnb.png" alt=""><img src="../assets/img/logos/rakovnik.png" alt=""><img src="../assets/img/logos/slany.png" alt=""><img src="../assets/img/logos/motol.png" alt="">
+    <img src="../assets/img/logos/cnb.png" alt=""><img src="../assets/img/logos/rakovnik.png" alt=""><img src="../assets/img/logos/slany.png" alt=""><img src="../assets/img/logos/motol.png" alt="">
+    <img src="../assets/img/logos/cnb.png" alt=""><img src="../assets/img/logos/rakovnik.png" alt=""><img src="../assets/img/logos/slany.png" alt=""><img src="../assets/img/logos/motol.png" alt="">
+  </div></div>
+</section>
+
+<section class="section"><div class="wrap">
+  <div class="sh"><span class="mono">§ 01</span><h2>O nás</h2><span class="r mono">Specifikace</span></div>
+  <div class="about">
+    <p>Jsme generální dodavatel <a href="#">veřejných zakázek</a> – realizujeme stavby, rekonstrukce a přestavby objektů občanské vybavenosti. Zakázky <a href="#">TZB</a> – VZT, chlazení, MaR, ZTI. Zajišťujeme servis VZT na námi realizovaných zakázkách.</p>
+    <table class="spec">
+      <tr><th>Generální dodávky</th><td>Stavby, rekonstrukce, přestavby objektů občanské vybavenosti</td></tr>
+      <tr><th>TZB</th><td>VZT · Chlazení · MaR · ZTI</td></tr>
+      <tr><th>Servis</th><td>Servis VZT na námi realizovaných zakázkách</td></tr>
+      <tr><th>Investoři</th><td>Nemocnice, města, státní instituce, kulturní a sportovní zařízení</td></tr>
+    </table>
+  </div>
+  <div class="facts">
+    <div class="fact"><span class="mono">Ø-01 · Zakázky</span><strong>30<em>+</em></strong>realizovaných zakázek</div>
+    <div class="fact"><span class="mono">Ø-02 · Tým</span><strong>xx</strong>zaměstnanců</div>
+    <div class="fact"><span class="mono">Ø-03 · Historie</span><strong>xx</strong>let na trhu</div>
+  </div>
+</div></section>
+
+<section class="section blueprint" style="border-top:1.5px solid var(--ink)"><div class="wrap">
+  <div class="sh"><span class="mono">§ 02</span><h2>Reference</h2><span class="r mono">Výkresové listy</span></div>
+  <div class="sheets">
+    <a class="sheet frame ticks" href="#"><div class="sheet__img"><img src="../assets/img/ref/homolka.jpg" alt=""><span class="sheet__no mono">R-01</span></div><h3>Nemocnice Na Homolce</h3><dl><dt>Obor</dt><dd>Veřejné zakázky</dd><dt>Rozsah</dt><dd>Stavba vč. technologií</dd><dt>Období</dt><dd>2021–dosud</dd></dl></a>
+    <a class="sheet frame ticks" href="#"><div class="sheet__img"><img src="../assets/img/ref/planetarium.jpg" alt=""><span class="sheet__no mono">R-02</span></div><h3>Planetárium Praha</h3><dl><dt>Obor</dt><dd>TZB</dd><dt>Rozsah</dt><dd>VZT, klima, vytápění, MaR</dd><dt>Období</dt><dd>2025</dd></dl></a>
+    <a class="sheet frame ticks" href="#"><div class="sheet__img"><img src="../assets/img/ref/cnb.jpg" alt=""><span class="sheet__no mono">R-03</span></div><h3>ČNB Praha</h3><dl><dt>Obor</dt><dd>Veřejné zakázky</dd><dt>Rozsah</dt><dd>VZT, chlazení, bezbariérový vstup</dd><dt>Období</dt><dd>2020–dosud</dd></dl></a>
+  </div>
+  <a class="all" href="#">Všechny reference →</a>
+</div></section>
+
+<footer class="footer"><div class="wrap">
+  <div class="tb">
+    <div><span class="mono">Zhotovitel</span><a class="logo" href="#">bohemik.</a></div>
+    <div><span class="mono">Kancelář</span>Pražská 636<br>263 01 Dobříš<br><a href="tel:+420326722707">+420 326 722 707</a><br><a href="mailto:info@bohemik.cz">info@bohemik.cz</a></div>
+    <div><span class="mono">Servisní dispečink</span><a href="tel:+420725309691">+420 725 309 691</a><br><a href="mailto:servis@bohemik.cz">servis@bohemik.cz</a></div>
+    <div><span class="mono">Identifikace</span>IČ 24265021<br>DIČ CZ24265021<br><a href="#">Instagram ↗</a></div>
+  </div>
+  <div class="footer__legal mono"><span>© 2026 Bohemik s.r.o.</span><a href="#">Ochrana osobních údajů</a></div>
+</div></footer>
+
+<script src="../assets/base.js"></script>
+</body>
+</html>

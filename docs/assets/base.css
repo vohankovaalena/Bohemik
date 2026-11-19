@@ -1,0 +1,56 @@
+/* Sdílený základ pro všechny varianty návrhu */
+@font-face { font-family: "Clash Display"; src: url("fonts/ClashDisplay-Light.otf") format("opentype"); font-weight: 300; font-display: swap; }
+@font-face { font-family: "Clash Display"; src: url("fonts/ClashDisplay-Regular.otf") format("opentype"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Clash Display"; src: url("fonts/ClashDisplay-Medium.otf") format("opentype"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Clash Display"; src: url("fonts/ClashDisplay-Semibold.otf") format("opentype"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Clash Display"; src: url("fonts/ClashDisplay-Bold.otf") format("opentype"); font-weight: 700; font-display: swap; }
+
+:root {
+  --bezova: #edebe8;
+  --modra: #c2ced6;
+  --hneda: #73342b;
+  --cervena: #fd3f1a;
+  --cerna: #252525;
+  --bila: #ffffff;
+  --clash: "Clash Display", system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body { margin: 0; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; }
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+h1, h2, h3, h4, p, ul, ol, figure { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Logo "bohemik." – textové, v ostrém webu nahradíme SVG */
+.logo { font-family: var(--clash); font-weight: 700; color: var(--cervena); text-decoration: none; letter-spacing: -0.02em; line-height: 1; }
+
+/* Nekonečný pás log */
+.marquee { min-width: 0; max-width: 100%; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.marquee__track { display: flex; align-items: center; width: max-content; animation: marquee 32s linear infinite; }
+.marquee:hover .marquee__track { animation-play-state: paused; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+/* Hamburger (mobil) */
+.nav-toggle { display: none; background: none; border: 0; padding: 8px; cursor: pointer; color: inherit; }
+.nav-toggle svg { width: 28px; height: 28px; }
+@media (max-width: 860px) {
+  .nav-toggle { display: block; }
+  [data-nav]:not(.is-open) { display: none !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track { animation: none; }
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+}
+
+/* Přepínač variant (jen pro prezentaci návrhů, na webu nebude) */
+.vswitch { position: fixed; z-index: 9999; left: 50%; bottom: 16px; transform: translateX(-50%); display: flex; align-items: center; gap: 4px; padding: 6px; background: rgba(37,37,37,.92); color: #fff; border-radius: 999px; font: 500 13px/1 var(--clash); box-shadow: 0 8px 30px rgba(0,0,0,.25); backdrop-filter: blur(6px); }
+.vswitch a { color: #fff; text-decoration: none; padding: 8px 11px; border-radius: 999px; white-space: nowrap; }
+.vswitch a:hover { background: rgba(255,255,255,.14); }
+.vswitch a[aria-current] { background: var(--cervena); color: var(--cerna); }
+.vswitch .vswitch__name { padding: 0 10px 0 6px; opacity: .75; }
+@media (max-width: 600px) { .vswitch .vswitch__name { display: none; } .vswitch a { padding: 8px 9px; } }

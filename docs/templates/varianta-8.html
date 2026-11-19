@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Varianta 8 · Zakázky – bohemik.</title>
+<link rel="stylesheet" href="../assets/base.css">
+<style>
+  /* Varianta 8 – „Zakázky na prvním místě“.
+     Prodejní web: hned po otevření ukazuje největší stavby a investory,
+     zadavatel najde kompletní seznam referenčních zakázek a může rovnou poptat.
+     Všechna čísla jsou spočítaná z výpisu referencí na současném webu (stary-web.md). */
+  body { background: var(--bezova); color: var(--cerna); font: 500 18px/1.6 var(--clash); }
+  .wrap { width: min(1280px, 100% - 48px); margin-inline: auto; }
+  h1, h2, h3 { font-weight: 700; letter-spacing: -0.02em; line-height: 1.05; }
+  .h2 { font-size: clamp(36px, 4.6vw, 64px); }
+  .eyebrow { display: inline-block; font-weight: 600; font-size: 14px; letter-spacing: .12em; text-transform: uppercase; color: var(--hneda); margin-bottom: 16px; }
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 16px 26px; border-radius: 12px; font: 600 17px/1 var(--clash); text-decoration: none; border: 2px solid currentColor; cursor: pointer; transition: background .2s, color .2s, border-color .2s; }
+  .btn--red { background: var(--cervena); border-color: var(--cervena); color: var(--cerna); }
+  .btn--red:hover { background: var(--bezova); border-color: var(--bezova); }
+  .btn--dark { background: var(--cerna); border-color: var(--cerna); color: var(--bezova); }
+  .btn--dark:hover { background: var(--hneda); border-color: var(--hneda); }
+  .btn--ghost { color: var(--bezova); }
+  .btn--ghost:hover { background: var(--bezova); color: var(--cerna); border-color: var(--bezova); }
+  .btn--line:hover { background: var(--cerna); color: var(--bezova); }
+  .link { font-weight: 700; color: var(--hneda); text-decoration: none; }
+  .link:hover { text-decoration: underline; text-underline-offset: 4px; }
+  .section { padding: 120px 0; }
+  [id] { scroll-margin-top: 90px; }
+
+  /* Hlavička – tmavá, navazuje na hero */
+  .header { position: sticky; top: 0; z-index: 30; background: rgba(37, 37, 37, .96); color: var(--bezova); backdrop-filter: blur(8px); }
+  .header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 18px 0; }
+  .header .logo { font-size: clamp(34px, 3.6vw, 46px); }
+  .nav { display: flex; align-items: center; gap: 30px; }
+  .nav > a { font-weight: 600; font-size: 17px; text-decoration: none; }
+  .nav > a:not(.btn):hover { color: var(--cervena); }
+  .nav__srv { font-size: 14px !important; color: rgba(237, 235, 232, .7); white-space: nowrap; }
+  .nav__srv b { color: var(--bezova); }
+  .nav .btn { padding: 12px 18px; font-size: 16px; }
+
+  /* Hero – prolínání fotek skutečných zakázek */
+  .hero { position: relative; background: var(--cerna); color: var(--bezova); min-height: min(88vh, 820px); display: flex; align-items: flex-end; overflow: hidden; }
+  .hero__slides img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.4s ease, transform 7s linear; transform: scale(1.06); }
+  .hero__slides img.is-on { opacity: 1; transform: scale(1); }
+  .hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(37,37,37,.92) 0%, rgba(37,37,37,.72) 42%, rgba(37,37,37,.15) 75%), linear-gradient(0deg, rgba(37,37,37,.85), transparent 45%); }
+  .hero .wrap { position: relative; z-index: 2; padding: 150px 0 170px; }
+  .hero h1 { font-size: clamp(42px, 6.2vw, 96px); max-width: 15ch; }
+  .hero h1 em { font-style: normal; color: var(--cervena); }
+  .hero__lead { font-size: clamp(18px, 1.6vw, 22px); max-width: 600px; margin-top: 26px; color: rgba(237, 235, 232, .86); }
+  .hero__cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 36px; }
+  .hero__now { position: absolute; z-index: 2; right: max(24px, calc((100% - 1280px) / 2)); bottom: 170px; text-align: right; font-size: 15px; line-height: 1.4; max-width: 340px; }
+  .hero__now small { display: block; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; font-size: 12px; color: var(--cervena); margin-bottom: 6px; }
+  .hero__now b { display: block; font-size: 20px; }
+  .hero__dots { display: flex; justify-content: flex-end; gap: 6px; margin-top: 14px; }
+  .hero__dots button { width: 34px; height: 4px; padding: 0; border: 0; border-radius: 2px; background: rgba(237, 235, 232, .35); cursor: pointer; }
+  .hero__dots button[aria-current="true"] { background: var(--cervena); }
+
+  /* Čísla – překrývají spodek hera */
+  .stats { position: relative; z-index: 3; margin-top: -110px; display: grid; grid-template-columns: repeat(4, 1fr); background: var(--bila); border-radius: 22px; box-shadow: 0 30px 60px rgba(37, 37, 37, .12); }
+  .stat { padding: 34px 30px; border-left: 1px solid rgba(37, 37, 37, .1); font-weight: 600; font-size: 17px; line-height: 1.35; }
+  .stat:first-child { border-left: 0; }
+  .stat strong { display: block; font-size: clamp(46px, 4.8vw, 72px); line-height: .95; letter-spacing: -0.04em; color: var(--cervena); margin-bottom: 10px; }
+  .stat strong.iso { font-size: clamp(30px, 2.8vw, 40px); line-height: 1.05; padding-top: 6px; color: var(--cerna); }
+
+  /* Investoři – jména jako hlavní argument */
+  .investors { padding: 110px 0 40px; }
+  .investors__head { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: end; margin-bottom: 44px; }
+  .investors__head p { font-size: 20px; max-width: 520px; }
+  .names { display: flex; flex-wrap: wrap; gap: 0 .5em; font-weight: 700; font-size: clamp(26px, 3.3vw, 48px); line-height: 1.25; letter-spacing: -0.02em; }
+  .names li { color: rgba(37, 37, 37, .3); transition: color .2s; }
+  .names li::after { content: " /"; color: var(--cervena); opacity: .6; }
+  .names li:last-child::after { content: ""; }
+  .names li.hi, .names li:hover { color: var(--cerna); }
+
+  /* Vlajkové zakázky */
+  .cases { display: grid; gap: 30px; margin-top: 60px; }
+  .case { display: grid; grid-template-columns: 1.35fr 1fr; background: var(--bila); border-radius: 26px; overflow: hidden; min-height: 520px; }
+  .case:nth-child(even) { grid-template-columns: 1fr 1.35fr; }
+  .case:nth-child(even) .case__img { order: 2; }
+  .case__img { position: relative; overflow: hidden; }
+  .case__img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .8s; }
+  .case:hover .case__img img { transform: scale(1.03); }
+  .case__count { position: absolute; left: 24px; bottom: 24px; background: var(--cerna); color: var(--bezova); border-radius: 14px; padding: 14px 18px; font-weight: 600; font-size: 15px; line-height: 1.2; }
+  .case__count strong { display: block; color: var(--cervena); font-size: 44px; line-height: 1; letter-spacing: -0.03em; }
+  .case__body { padding: 50px 48px; display: flex; flex-direction: column; }
+  .case__tag { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 22px; }
+  .case__tag span { background: var(--bezova); border-radius: 999px; padding: 6px 13px; font-size: 14px; font-weight: 600; }
+  .case__tag span:first-child { background: var(--modra); }
+  .case h3 { font-size: clamp(30px, 3vw, 42px); }
+  .case__inv { margin-top: 8px; color: #555; font-size: 16px; }
+  .case ul { margin: 26px 0 30px; }
+  .case li { padding: 11px 0 11px 28px; border-top: 1px solid rgba(37, 37, 37, .12); position: relative; font-size: 17px; line-height: 1.4; }
+  .case li::before { content: ""; position: absolute; left: 4px; top: 19px; width: 10px; height: 10px; border-radius: 2px; background: var(--cervena); }
+  .case__meta { margin-top: auto; display: flex; gap: 32px; flex-wrap: wrap; font-size: 15px; }
+  .case__meta b { display: block; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--hneda); }
+  .case--small { min-height: 0; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+  .duo .case { grid-template-columns: 1fr; grid-template-rows: 300px auto; }
+  .duo .case .case__img { order: 0; }
+  .duo .case__body { padding: 36px 36px 40px; }
+
+  /* Silná stránka: technologie ve vlastní režii */
+  .edge { background: var(--cerna); color: var(--bezova); }
+  .edge .wrap { display: grid; grid-template-columns: 1fr 1.1fr; gap: 70px; align-items: center; }
+  .edge .h2 em { font-style: normal; color: var(--cervena); }
+  .edge p { color: rgba(237, 235, 232, .8); font-size: 19px; margin-top: 22px; max-width: 520px; }
+  .rooms { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .rooms div { border: 1px solid rgba(237, 235, 232, .18); border-radius: 16px; padding: 22px 22px 20px; }
+  .rooms b { display: block; font-size: 21px; line-height: 1.2; }
+  .rooms span { display: block; margin-top: 6px; font-size: 14px; color: rgba(237, 235, 232, .6); }
+
+  /* Seznam referenčních zakázek */
+  .register__head { display: flex; justify-content: space-between; align-items: flex-end; gap: 30px; flex-wrap: wrap; margin-bottom: 40px; }
+  .register__head p { max-width: 540px; margin-top: 16px; font-size: 19px; }
+  .sectors { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 26px; }
+  .sectors button { text-align: left; font: 600 16px/1.25 var(--clash); color: var(--cerna); background: var(--bila); border: 2px solid transparent; border-radius: 18px; padding: 20px 20px 18px; cursor: pointer; transition: border-color .2s, background .2s; }
+  .sectors button strong { display: block; font-size: 42px; line-height: 1; letter-spacing: -0.03em; margin-bottom: 8px; color: var(--cervena); }
+  .sectors button:hover { border-color: rgba(37, 37, 37, .25); }
+  .sectors button[aria-pressed="true"] { background: var(--cerna); color: var(--bezova); }
+  .table { width: 100%; border-collapse: collapse; background: var(--bila); border-radius: 22px; overflow: hidden; font-size: 16px; line-height: 1.45; }
+  .table th { text-align: left; font-weight: 600; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--hneda); padding: 20px 22px; border-bottom: 2px solid var(--bezova); }
+  .table td { padding: 20px 22px; border-bottom: 1px solid var(--bezova); vertical-align: top; }
+  .table tr[hidden] { display: none; }
+  .table tbody tr:hover td { background: #faf9f7; }
+  .table td:first-child { font-weight: 700; font-size: 17px; width: 26%; }
+  .table td:first-child small { display: block; font-weight: 500; font-size: 14px; color: #666; margin-top: 2px; }
+  .table td:nth-child(2) li + li { margin-top: 6px; }
+  .table td:nth-child(2) li { padding-left: 16px; position: relative; }
+  .table td:nth-child(2) li::before { content: "–"; position: absolute; left: 0; color: var(--cervena); }
+  .table td:nth-child(3) { white-space: nowrap; width: 12%; }
+  .table td:nth-child(4) { width: 15%; }
+  .role { display: inline-block; border-radius: 8px; padding: 4px 10px; font-size: 13px; font-weight: 600; background: var(--modra); white-space: nowrap; }
+  .role--gd { background: var(--cerna); color: var(--bezova); }
+  .role--sub { background: var(--bezova); }
+  .register__foot { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; margin-top: 26px; font-size: 15px; color: #555; }
+
+  /* Rozsah dodávky */
+  .scope { background: var(--modra); }
+  .scope__head { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: end; margin-bottom: 56px; }
+  .scope__head p { font-size: 20px; }
+  .steps { list-style: none; display: grid; grid-template-columns: repeat(6, 1fr); gap: 0; counter-reset: s; border-top: 2px solid var(--cerna); }
+  .steps li { counter-increment: s; padding: 24px 22px 0 0; font-size: 16px; line-height: 1.45; }
+  .steps li::before { content: "0" counter(s); display: block; font-weight: 700; font-size: 15px; color: var(--hneda); margin-bottom: 26px; }
+  .steps b { display: block; font-size: 21px; line-height: 1.2; margin-bottom: 8px; }
+
+  /* Pro zadavatele – kvalifikace */
+  .qual { display: grid; grid-template-columns: 1fr 1.2fr; gap: 70px; align-items: start; }
+  .qual__list { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .qual__list div { background: var(--bila); border-radius: 18px; padding: 24px; }
+  .qual__list b { display: block; font-size: 22px; line-height: 1.2; margin-bottom: 6px; }
+  .qual__list span { font-size: 15px; color: #555; line-height: 1.45; display: block; }
+  .qual p { font-size: 19px; margin-top: 20px; }
+  .qual .btn { margin-top: 30px; }
+
+  /* Poptávka */
+  .ask { background: var(--cerna); color: var(--bezova); }
+  .ask .wrap { display: grid; grid-template-columns: 1fr 1.15fr; gap: 70px; }
+  .ask .eyebrow { color: var(--modra); }
+  .ask p { color: rgba(237, 235, 232, .8); font-size: 19px; margin-top: 22px; max-width: 480px; }
+  .ask__direct { margin-top: 44px; display: grid; gap: 18px; }
+  .ask__direct a { text-decoration: none; font-weight: 700; font-size: clamp(24px, 2.4vw, 32px); display: block; }
+  .ask__direct a:hover { color: var(--cervena); }
+  .ask__direct small { display: block; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: rgba(237, 235, 232, .55); font-weight: 600; }
+  .form { background: var(--bezova); color: var(--cerna); border-radius: 26px; padding: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 18px 16px; }
+  .form label { display: grid; gap: 6px; font-weight: 600; font-size: 15px; }
+  .form .full { grid-column: 1 / -1; }
+  .form input, .form select, .form textarea { font: 500 17px/1.4 var(--clash); color: var(--cerna); background: var(--bila); border: 2px solid transparent; border-radius: 12px; padding: 13px 14px; width: 100%; min-width: 0; }
+  .form input:focus, .form select:focus, .form textarea:focus { outline: none; border-color: var(--cerna); }
+  .form textarea { min-height: 120px; resize: vertical; }
+  .form .hint { font-weight: 500; font-size: 13px; color: #666; }
+  .form .types { display: flex; gap: 8px; flex-wrap: wrap; }
+  .form .types label { display: inline-flex; grid-template-columns: none; cursor: pointer; }
+  .form .types input { position: absolute; opacity: 0; width: 1px; }
+  .form .types span { padding: 10px 16px; border-radius: 999px; border: 2px solid var(--cerna); font-size: 15px; }
+  .form .types input:checked + span { background: var(--cerna); color: var(--bezova); }
+  .form .types input:focus-visible + span { outline: 3px solid var(--cervena); outline-offset: 2px; }
+  .form__send { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+  .form__send small { font-size: 13px; color: #555; flex: 1; min-width: 200px; line-height: 1.45; }
+  .form__ok { grid-column: 1 / -1; background: var(--modra); border-radius: 12px; padding: 14px 16px; font-weight: 600; }
+
+  /* Servis a kariéra – druhá řada */
+  .more { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .more > a { position: relative; background: var(--bila); border-radius: 24px; padding: 40px 40px 36px; text-decoration: none; display: flex; flex-direction: column; min-height: 300px; overflow: hidden; transition: transform .25s, box-shadow .25s; }
+  .more > a:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(37, 37, 37, .09); }
+  .more h3 { font-size: 32px; max-width: 70%; }
+  .more p { margin-top: 10px; font-size: 17px; color: #4a4a4a; max-width: 62%; }
+  .more .big { margin-top: auto; font-weight: 700; font-size: clamp(24px, 2.6vw, 34px); color: var(--hneda); }
+  .more img { position: absolute; right: 20px; bottom: 0; height: 78%; width: auto; max-width: 38%; object-fit: contain; object-position: bottom; }
+  .more__srv { background: var(--modra) !important; }
+
+  /* Patička */
+  .footer { background: var(--cerna); color: var(--bezova); padding: 72px 0 100px; font-size: 16px; border-top: 1px solid rgba(237, 235, 232, .14); }
+  .footer .logo { font-size: 46px; }
+  .footer__grid { display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr; gap: 32px; }
+  .footer h4 { font-weight: 600; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--modra); margin-bottom: 12px; }
+  .footer a { text-decoration: none; }
+  .footer a:hover { color: var(--cervena); }
+  .footer__legal { margin-top: 56px; padding-top: 20px; border-top: 1px solid rgba(237, 235, 232, .2); display: flex; justify-content: space-between; gap: 16px; font-size: 14px; color: rgba(237, 235, 232, .65); flex-wrap: wrap; }
+
+  @media (max-width: 1100px) {
+    .nav__srv { display: none; }
+    .sectors { grid-template-columns: repeat(3, 1fr); }
+    .steps { grid-template-columns: repeat(3, 1fr); row-gap: 34px; }
+  }
+  @media (max-width: 960px) {
+    .section { padding: 84px 0; }
+    .stats { grid-template-columns: 1fr 1fr; }
+    .stat:nth-child(3) { border-left: 0; }
+    .stat:nth-child(n+3) { border-top: 1px solid rgba(37, 37, 37, .1); }
+    .investors__head, .case, .case:nth-child(even), .duo, .edge .wrap, .scope__head, .qual, .ask .wrap, .more, .footer__grid { grid-template-columns: 1fr; }
+    .case:nth-child(even) .case__img { order: 0; }
+    .case__img { aspect-ratio: 16 / 10; }
+    .duo .case { grid-template-rows: auto; }
+    .case__body, .duo .case__body { padding: 30px 26px 34px; }
+    .edge .wrap, .qual, .ask .wrap { gap: 44px; }
+    .hero__now { display: none; }
+    /* Tabulka se skládá do karet */
+    .table, .table tbody, .table tr, .table td { display: block; width: auto !important; }
+    .table thead { display: none; }
+    .table { background: none; border-radius: 0; }
+    .table tr { background: var(--bila); border-radius: 18px; margin-bottom: 12px; padding: 18px 20px; }
+    .table td { padding: 4px 0; border: 0; white-space: normal !important; }
+    .table td:nth-child(3) { color: #666; font-size: 15px; }
+    .table tbody tr:hover td { background: none; }
+  }
+  @media (max-width: 860px) {
+    .header .wrap { flex-wrap: wrap; padding: 14px 0; }
+    .nav { flex-direction: column; align-items: flex-start; gap: 18px; width: 100%; padding: 10px 0 12px; }
+    .hero { min-height: 0; }
+    .hero .wrap { padding: 110px 0 150px; }
+    .sectors { grid-template-columns: 1fr 1fr; }
+    .sectors button:first-child { grid-column: 1 / -1; }
+    .steps { grid-template-columns: 1fr 1fr; }
+    .rooms, .qual__list, .form { grid-template-columns: 1fr; }
+    .form { padding: 26px 20px; }
+    .more > a { padding: 30px 26px; min-height: 0; }
+    .more h3, .more p { max-width: none; }
+    .more img { position: static; height: 150px; max-width: none; margin: 18px 0 -36px auto; }
+  }
+  @media (max-width: 480px) {
+    .stat { padding: 22px 16px; font-size: 14px; }
+    .stat strong { font-size: 44px; }
+    .stat strong.iso { font-size: 22px; }
+    .steps { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero__slides img { transform: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header"><div class="wrap">
+  <a class="logo" href="#">bohemik.</a>
+  <button class="nav-toggle" aria-expanded="false" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M3 7h18M3 12h18M3 17h18"/></svg></button>
+  <nav class="nav" data-nav>
+    <a href="#zakazky">zakázky</a>
+    <a href="#co-dodame">co dodáme</a>
+    <a href="#pro-zadavatele">pro zadavatele</a>
+    <a href="#kariera">kariéra</a>
+    <a class="nav__srv" href="tel:+420725309691">Servis VZT <b>725 309 691</b></a>
+    <a class="btn btn--red" href="#poptavka">Poptat zakázku</a>
+  </nav>
+</div></header>
+
+<section class="hero" aria-label="Úvod">
+  <div class="hero__slides" aria-hidden="true">
+    <img class="is-on" src="../assets/img/ref/cnb.jpg" alt="">
+    <img src="../assets/img/ref/rakovnik.jpg" alt="">
+    <img src="../assets/img/ref/planetarium.jpg" alt="">
+    <img src="../assets/img/ref/bazen-kralupy.jpg" alt="">
+  </div>
+  <div class="wrap">
+    <h1>Stavíme pro nemocnice, banky a&nbsp;města. <em>Na&nbsp;klíč.</em></h1>
+    <p class="hero__lead">Generální dodávky veřejných zakázek včetně technologií. Od přípravy a projektu po předání díla – jeden dodavatel s plnou odpovědností.</p>
+    <div class="hero__cta"><a class="btn btn--red" href="#zakazky">Naše největší zakázky →</a><a class="btn btn--ghost" href="#poptavka">Poptat zakázku</a></div>
+  </div>
+  <div class="hero__now" aria-live="polite">
+    <small>Naše zakázka</small>
+    <b data-now-t>Česká národní banka</b><span data-now-d>Dochlazení budovy ústředí, výměna VZT · od 2020</span>
+    <div class="hero__dots" role="group" aria-label="Přepnout fotku"></div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="stats">
+    <div class="stat"><strong>29</strong>referenčních zakázek od roku 2020</div>
+    <div class="stat"><strong>15</strong>veřejných investorů</div>
+    <div class="stat"><strong>13</strong>zakázek ve zdravotnictví</div>
+    <div class="stat"><strong class="iso">ISO 9001<br>ISO 14001</strong>certifikovaný systém kvality</div>
+  </div>
+</div>
+
+<section class="investors" aria-labelledby="inv-h"><div class="wrap">
+  <div class="investors__head">
+    <div><span class="eyebrow">Pro koho stavíme</span><h2 class="h2" id="inv-h">Investoři, kteří se k nám vracejí.</h2></div>
+    <p>Česká národní banka s námi spolupracuje od roku 2020, Nemocnice Na Homolce od roku 2021. Každá další zakázka je pro nás nejlepší reference.</p>
+  </div>
+  <ul class="names">
+    <li class="hi">Česká národní banka</li><li class="hi">Nemocnice Na&nbsp;Homolce</li><li>IKEM</li><li class="hi">Fakultní Thomayerova nemocnice</li><li>Fakultní nemocnice Královské Vinohrady</li><li>Masarykova nemocnice Rakovník</li><li class="hi">Hlavní město Praha</li><li>Národní technické muzeum</li><li>Planetárium Praha</li><li>Letiště Praha – Czech Airlines Technics</li><li>Město Slaný</li><li>Kralupy nad Vltavou</li><li>Město Hlinsko</li><li>Obec Trubín</li>
+  </ul>
+</div></section>
+
+<section class="section" id="zakazky" style="padding-top:60px"><div class="wrap">
+  <span class="eyebrow">Vybrané zakázky</span>
+  <h2 class="h2">Velké stavby, kde rozhodují technologie.</h2>
+
+  <div class="cases">
+    <article class="case">
+      <div class="case__img"><img src="../assets/img/ref/homolka.jpg" alt="Nemocnice Na Homolce"><div class="case__count"><strong>6</strong>zakázek od roku 2021</div></div>
+      <div class="case__body">
+        <div class="case__tag"><span>Generální dodávka</span><span>Zdravotnictví</span></div>
+        <h3>Nemocnice Na&nbsp;Homolce</h3>
+        <p class="case__inv">Investor: Fakultní nemocnice Motol a Homolka</p>
+        <ul>
+          <li>Přístavba a přestavba objektu 080 PET</li>
+          <li>Rekonstrukce stravovacího provozu</li>
+          <li>Přestavba a rozšíření lůžkových kapacit chirurgie</li>
+          <li>Dialyzační středisko a rozšíření skladu SZM</li>
+          <li>Rekonstrukce chlazení OKBHI · gastroenterologická ambulance</li>
+        </ul>
+        <div class="case__meta"><div><b>Období</b>10/2021 – dosud</div><div><b>Rozsah</b>Stavební práce včetně technologií</div></div>
+      </div>
+    </article>
+
+    <article class="case">
+      <div class="case__img"><img src="../assets/img/ref/cnb.jpg" alt="Budova České národní banky v Praze"><div class="case__count"><strong>4</strong>zakázky od roku 2020</div></div>
+      <div class="case__body">
+        <div class="case__tag"><span>Generální dodávka</span><span>Projekce</span><span>Státní instituce</span></div>
+        <h3>Česká národní banka</h3>
+        <p class="case__inv">Investor: Česká národní banka</p>
+        <ul>
+          <li>Dochlazení budovy ústředí ČNB – projekt i realizace</li>
+          <li>Výměna patrových vzduchotechnik</li>
+          <li>Bezbariérový vstup, Na Příkopě 28</li>
+        </ul>
+        <div class="case__meta"><div><b>Období</b>09/2020 – dosud</div><div><b>Rozsah</b>Stavební práce, technologie a projektová činnost</div></div>
+      </div>
+    </article>
+
+    <div class="duo">
+      <article class="case">
+        <div class="case__img"><img src="../assets/img/ref/rakovnik.jpg" alt="Masarykova nemocnice Rakovník"></div>
+        <div class="case__body">
+          <div class="case__tag"><span>Generální dodávka</span><span>Zdravotnictví</span></div>
+          <h3>Rekonstrukce akutní péče</h3>
+          <p class="case__inv">Masarykova nemocnice Rakovník</p>
+          <div class="case__meta" style="margin-top:26px"><div><b>Období</b>12/2022 – 11/2023</div><div><b>Rozsah</b>Stavební práce včetně technologií</div></div>
+        </div>
+      </article>
+      <article class="case">
+        <div class="case__img"><img src="../assets/img/ref/planetarium.jpg" alt="Planetárium Praha"></div>
+        <div class="case__body">
+          <div class="case__tag"><span>TZB</span><span>Kultura</span></div>
+          <h3>VZT, klimatizace, vytápění a&nbsp;MaR</h3>
+          <p class="case__inv">Hvězdárna a planetárium hl. m. Prahy</p>
+          <div class="case__meta" style="margin-top:26px"><div><b>Období</b>03 – 12/2025</div><div><b>Rozsah</b>Dodávka a montáž technologií</div></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</div></section>
+
+<section class="section edge"><div class="wrap">
+  <div>
+    <span class="eyebrow" style="color:var(--modra)">Proč Bohemik</span>
+    <h2 class="h2">Technologie neřešíme subdodávkou. <em>Děláme je sami.</em></h2>
+    <p>Vyrostli jsme ze vzduchotechniky a technického zařízení budov. Jako generální dodavatel proto zvládneme i stavby, kde je technologie nejsložitější částí díla – a investor má na celou stavbu jednoho partnera.</p>
+  </div>
+  <div class="rooms">
+    <div><b>Operační sály</b><span>Fakultní Thomayerova nemocnice, IKEM</span></div>
+    <div><b>PET, CT a PET/CT</b><span>Nemocnice Na Homolce, FN Královské Vinohrady</span></div>
+    <div><b>Onkologie a dialýza</b><span>FN Královské Vinohrady, Nemocnice Na Homolce</span></div>
+    <div><b>Chlazení velkých budov</b><span>Česká národní banka, Národní technické muzeum</span></div>
+    <div><b>Kolektory pod Prahou</b><span>Hlavní město Praha</span></div>
+    <div><b>Bazény a sportoviště</b><span>Kralupy nad Vltavou, Slaný</span></div>
+  </div>
+</div></section>
+
+<section class="section" id="seznam"><div class="wrap">
+  <div class="register__head">
+    <div><span class="eyebrow">Pro hodnoticí komise</span><h2 class="h2">Seznam referenčních zakázek</h2><p>Všechny zakázky od roku 2020 na jednom místě. Osvědčení od investorů doložíme k nabídce.</p></div>
+    <a class="btn btn--line" href="#">Stáhnout v PDF ↓</a>
+  </div>
+  <div class="sectors" role="group" aria-label="Filtr podle oboru">
+    <button aria-pressed="true" data-s="vse"><strong>29</strong>Všechny zakázky</button>
+    <button aria-pressed="false" data-s="zdrav"><strong>13</strong>Zdravotnictví</button>
+    <button aria-pressed="false" data-s="inst"><strong>6</strong>Státní a kulturní instituce</button>
+    <button aria-pressed="false" data-s="mesta"><strong>6</strong>Města a obce</button>
+    <button aria-pressed="false" data-s="infra"><strong>4</strong>Infrastruktura a doprava</button>
+  </div>
+  <table class="table">
+    <thead><tr><th>Investor</th><th>Zakázka</th><th>Období</th><th>Naše role</th></tr></thead>
+    <tbody>
+      <tr data-s="mesta"><td>Obec Trubín</td><td><ul><li>Objekt pro dětské skupiny včetně zpevněných ploch a parkování</li></ul></td><td>05/2025 – 03/2026</td><td><span class="role role--gd">Generální dodávka</span></td></tr>
+      <tr data-s="zdrav"><td>Fakultní nemocnice Královské Vinohrady</td><td><ul><li>Modernizace centra onkologické a hematoonkologické péče</li><li>Stavební úpravy pracoviště CT a PET/CT, pavilon H</li></ul></td><td>03/2025 – 03/2026</td><td><span class="role role--gd">Generální dodávka</span></td></tr>
+      <tr data-s="inst"><td>Planetárium Praha<small>Hvězdárna a planetárium hl. m. Prahy</small></td><td><ul><li>Rekonstrukce VZT, klimatizace, ÚT a MaR</li></ul></td><td>03 – 12/2025</td><td><span class="role">TZB</span></td></tr>
+      <tr data-s="infra"><td>Hlavní město Praha<small>Kolektory Praha</small></td><td><ul><li>Oprava OCK kolektoru MoKo B6, B7</li><li>Oprava vzduchotechniky kolektoru Modřany K2</li><li>Oprava pochozích roštů – Žižkov, KC1A, Panská, Milošova chodba</li></ul></td><td>05/2024 – 01/2026</td><td><span class="role role--gd">Generální dodávka</span></td></tr>
+      <tr data-s="zdrav"><td>IKEM<small>Institut klinické a experimentální medicíny</small></td><td><ul><li>Stavební úpravy v objektech D a G</li><li>Výměna VZT jednotky operačního sálu 4</li></ul></td><td>04/2024 – 07/2025</td><td><span class="role role--gd">Generální dodávka</span></td></tr>
+      <tr data-s="infra"><td>Letiště Praha<small>Czech Airlines Technics</small></td><td><ul><li>Úpravy pro lakovací kabinu v Hangáru F</li></ul></td><td>06 – 12/2024</td><td><span class="role role--gd">Generální dodávka</span></td></tr>
+      <tr data-s="inst"><td>Národní technické muzeum</td><td><ul><li>Doplnění chlazení do 2. a 3. patra budovy</li></ul></td><td>05 – 11/2024</td><td><span class="role">TZB</span></td></tr>
+      <tr data-s="mesta"><td>Město Slaný</td><td><ul><li>Půdní vestavba ZŠ Komenského</li></ul></td><td>09/2023 – 03/2025</td><td><span class="role role--gd">Generální dodávka</span></td></tr>
+      <tr data-s="zdrav"><td>Fakultní Thomayerova nemocnice</td><td><ul><li>Energeticky úsporná renovace pavilonu G1 – VZT a chlazení</li></ul></td><td>07/2023 – 12/2024</td><td><span class="role">TZB</span> <span class="role role--sub">pro GD AVERS</span></td></tr>
+      <tr data-s="zdrav"><td>Masarykova nemocnice Rakovník</td><td><ul><li>Rekonstrukce akutní péče</li></ul></td><td>12/2022 – 11/2023</td><td><span class="role role--gd">Generální dodávka</span></td></tr>
+      <tr data-s="mesta"><td>Kralupy nad Vltavou</td><td><ul><li>Rekonstrukce plaveckého bazénu, III. etapa</li></ul></td><td>07/2022 – 02/2023</td><td><span class="role role--gd">Generální dodávka</span></td></tr>
+      <tr data-s="mesta"><td>Město Slaný</td><td><ul><li>Zimní stadion – výměna střešního pláště včetně zateplení</li></ul></td><td>06 – 12/2022</td><td><span class="role role--sub">Subdodávka pro GD Tost</span></td></tr>
+      <tr data-s="zdrav"><td>Fakultní Thomayerova nemocnice</td><td><ul><li>Pavilon G3 – operační sály, rekonstrukce VZT</li></ul></td><td>02 – 09/2022</td><td><span class="role role--gd">Generální dodávka</span></td></tr>
+      <tr data-s="zdrav"><td>Nemocnice Na Homolce<small>FN Motol a Homolka</small></td><td><ul><li>Přístavba a přestavba objektu 080 PET</li><li>Rekonstrukce stravovacího provozu</li><li>Přestavba a rozšíření lůžkových kapacit chirurgie</li><li>Dialyzační středisko a rozšíření skladu SZM</li><li>Rekonstrukce chlazení OKBHI</li><li>Přestavba gastroenterologické ambulance II</li></ul></td><td>10/2021 – dosud</td><td><span class="role role--gd">Generální dodávka</span></td></tr>
+      <tr data-s="mesta"><td>Město Slaný<small>Víceúčelová sportovní hala Slaný</small></td><td><ul><li>Rekonstrukce plaveckého areálu – energeticky úsporná opatření</li></ul></td><td>11/2021 – 05/2022</td><td><span class="role role--gd">Generální dodávka</span></td></tr>
+      <tr data-s="inst"><td>Česká národní banka</td><td><ul><li>Dochlazení budovy ústředí – projektová dokumentace</li><li>Dochlazení budovy ústředí – realizace</li><li>Výměna patrových vzduchotechnik</li><li>Bezbariérový vstup, Na Příkopě 28</li></ul></td><td>09/2020 – dosud</td><td><span class="role role--gd">Generální dodávka</span> <span class="role">Projekce</span></td></tr>
+      <tr data-s="mesta"><td>Město Hlinsko</td><td><ul><li>Vzduchotechnika kuchyně ZŠ Ležáků</li></ul></td><td>07 – 08/2020</td><td><span class="role">TZB</span></td></tr>
+    </tbody>
+  </table>
+  <div class="register__foot"><span data-count>Zobrazeno 29 zakázek</span><a class="link" href="#poptavka">Hledáte referenci na konkrétní typ stavby? Zeptejte se →</a></div>
+</div></section>
+
+<section class="section scope" id="co-dodame"><div class="wrap">
+  <div class="scope__head">
+    <div><span class="eyebrow">Co dodáme</span><h2 class="h2">Celou stavbu. Od A do Z.</h2></div>
+    <p>Jako generální dodavatel koordinujeme všechny subdodavatele, řídíme harmonogram a odpovídáme za kvalitu každé fáze. Investor komunikuje s jedním partnerem.</p>
+  </div>
+  <ol class="steps">
+    <li><b>Příprava a ocenění</b>Rozpočet, tendrování materiálu a subdodávek.</li>
+    <li><b>Projektová dokumentace</b>Projekční činnost včetně technologií.</li>
+    <li><b>Stavební práce</b>Stavby, rekonstrukce, přístavby a přestavby.</li>
+    <li><b>Technologie TZB</b>VZT, chlazení, vytápění, MaR a ZTI vlastními silami.</li>
+    <li><b>Předání díla</b>Zaregulování, zkoušky, dokumentace skutečného provedení.</li>
+    <li><b>Servis</b>Záruční i pozáruční servis vzduchotechniky.</li>
+  </ol>
+</div></section>
+
+<section class="section" id="pro-zadavatele"><div class="wrap qual">
+  <div>
+    <span class="eyebrow">Pro zadavatele</span>
+    <h2 class="h2">Splníme kvalifikaci.</h2>
+    <p>Podklady pro kvalifikaci a hodnocení nabídky vám pošleme obratem – výpis z obchodního rejstříku, certifikáty i osvědčení o realizovaných zakázkách.</p>
+    <a class="btn btn--dark" href="mailto:info@bohemik.cz?subject=Podklady%20ke%20kvalifikaci">Vyžádat podklady</a>
+  </div>
+  <div class="qual__list">
+    <div><b>ISO 9001</b><span>Všechny činnosti provádíme v souladu se systémem řízení kvality.</span></div>
+    <div><b>ISO 14001</b><span>Certifikovaný systém environmentálního managementu.</span></div>
+    <div><b>Vlastní tým</b><span>Zhruba dvě desítky vlastních zaměstnanců řídí každou zakázku.</span></div>
+    <div><b>Osvědčení investorů</b><span>K referenčním zakázkám doložíme osvědčení objednatelů.</span></div>
+    <div><b>Česká firma</b><span>Ryze česká firma s transparentní strukturou.</span></div>
+    <div><b>Datová schránka</b><span>cj8jye8 · IČ 24265021 · OR Městský soud v Praze, C 198858</span></div>
+  </div>
+</div></section>
+
+<section class="section ask" id="poptavka"><div class="wrap">
+  <div>
+    <span class="eyebrow">Poptávka</span>
+    <h2 class="h2">Připravujete stavbu?</h2>
+    <p>Pošlete nám odkaz na zadávací dokumentaci nebo popište záměr. Ozveme se co nejdříve.</p>
+    <div class="ask__direct">
+      <a href="tel:+420326722707"><small>Kancelář</small>+420 326 722 707</a>
+      <a href="mailto:info@bohemik.cz"><small>E-mail</small>info@bohemik.cz</a>
+    </div>
+  </div>
+  <form class="form" action="https://api.web3forms.com/submit" method="post">
+    <fieldset class="full" style="border:0;padding:0;margin:0"><legend style="font-weight:600;font-size:15px;margin-bottom:8px">Typ zakázky</legend>
+      <div class="types">
+        <label><input type="radio" name="typ" value="Generální dodávka" checked><span>Generální dodávka</span></label>
+        <label><input type="radio" name="typ" value="TZB"><span>TZB</span></label>
+        <label><input type="radio" name="typ" value="Servis VZT"><span>Servis VZT</span></label>
+        <label><input type="radio" name="typ" value="Jiné"><span>Jiné</span></label>
+      </div>
+    </fieldset>
+    <label>Jméno a příjmení<input name="jmeno" autocomplete="name" required></label>
+    <label>Organizace<input name="organizace" autocomplete="organization"></label>
+    <label>E-mail<input type="email" name="email" autocomplete="email" required></label>
+    <label>Telefon<input type="tel" name="telefon" autocomplete="tel"></label>
+    <label class="full">Odkaz na zadávací dokumentaci <span class="hint">profil zadavatele, NEN, Tender arena…</span><input type="url" name="odkaz" placeholder="https://"></label>
+    <label class="full">Popis záměru<textarea name="zprava" placeholder="Co, kde a kdy chcete stavět"></textarea></label>
+    <div class="full form__send"><button class="btn btn--dark" type="submit">Odeslat poptávku →</button><small>Odesláním berete na vědomí <a class="link" href="#">zpracování osobních údajů</a> za účelem vyřízení poptávky.</small></div>
+  </form>
+</div></section>
+
+<section class="section" id="kariera"><div class="wrap more">
+  <a class="more__srv" href="tel:+420725309691">
+    <h3>Servis vzduchotechniky</h3>
+    <p>Servisní dispečink pro zařízení na námi realizovaných stavbách.</p>
+    <span class="big">+420 725 309 691</span>
+    <img src="../assets/img/ilu/vzt.png" alt="">
+  </a>
+  <a href="#">
+    <h3>Hledáme kolegy na velké stavby</h3>
+    <p>Stavbyvedoucí, rozpočtář / přípravář, instalatér – topenář.</p>
+    <span class="big">3 volné pozice →</span>
+    <img src="../assets/img/ilu/helma.png" alt="">
+  </a>
+</div></section>
+
+<footer class="footer"><div class="wrap">
+  <div class="footer__grid">
+    <div><a class="logo" href="#">bohemik.</a></div>
+    <div><h4>Kancelář</h4>Pražská 636<br>263 01 Dobříš<br><a href="tel:+420326722707">+420 326 722 707</a><br><a href="mailto:info@bohemik.cz">info@bohemik.cz</a></div>
+    <div><h4>Servis VZT</h4><a href="tel:+420725309691">+420 725 309 691</a><br><a href="mailto:servis@bohemik.cz">servis@bohemik.cz</a></div>
+    <div><h4>Web</h4><a href="#zakazky">zakázky</a><br><a href="#seznam">seznam referencí</a><br><a href="#co-dodame">co dodáme</a><br><a href="#kariera">kariéra</a><br><a href="#">LinkedIn ↗</a> · <a href="#">Instagram ↗</a></div>
+  </div>
+  <div class="footer__legal"><span>Bohemik s.r.o. · IČ 24265021 · DIČ CZ24265021</span><a href="#">Ochrana osobních údajů</a></div>
+</div></footer>
+
+<script src="../assets/base.js"></script>
+<script>
+  // Hero: prolínání fotek zakázek s popiskem
+  (() => {
+    const slides = [
+      ["Česká národní banka", "Dochlazení budovy ústředí, výměna VZT · od 2020"],
+      ["Masarykova nemocnice Rakovník", "Rekonstrukce akutní péče · 2022–2023"],
+      ["Planetárium Praha", "VZT, klimatizace, vytápění a MaR · 2025"],
+      ["Plavecký bazén Kralupy", "Rekonstrukce, III. etapa · 2022–2023"],
+    ];
+    const imgs = document.querySelectorAll(".hero__slides img");
+    const dots = document.querySelector(".hero__dots");
+    const t = document.querySelector("[data-now-t]"), d = document.querySelector("[data-now-d]");
+    let i = 0, timer;
+    const show = (n) => {
+      i = n;
+      imgs.forEach((im, k) => im.classList.toggle("is-on", k === n));
+      dots.querySelectorAll("button").forEach((b, k) => b.setAttribute("aria-current", String(k === n)));
+      t.textContent = slides[n][0]; d.textContent = slides[n][1];
+    };
+    slides.forEach((s, k) => {
+      const b = document.createElement("button");
+      b.setAttribute("aria-label", s[0]);
+      b.addEventListener("click", () => { show(k); clearInterval(timer); });
+      dots.appendChild(b);
+    });
+    show(0);
+    if (!matchMedia("(prefers-reduced-motion: reduce)").matches) timer = setInterval(() => show((i + 1) % slides.length), 6000);
+  })();
+
+  // Filtr seznamu zakázek podle oboru
+  (() => {
+    const btns = document.querySelectorAll(".sectors button");
+    const rows = document.querySelectorAll(".table tbody tr");
+    const out = document.querySelector("[data-count]");
+    btns.forEach((b) => b.addEventListener("click", () => {
+      const s = b.dataset.s;
+      let jobs = 0;
+      btns.forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      rows.forEach((r) => {
+        r.hidden = s !== "vse" && r.dataset.s !== s;
+        if (!r.hidden) jobs += r.querySelectorAll("li").length;
+      });
+      const zak = jobs === 1 ? "zakázka" : jobs < 5 ? "zakázky" : "zakázek";
+      out.textContent = `Zobrazeno ${jobs} ${zak}`;
+    }));
+  })();
+
+  // Formulář v návrhu nic neodesílá
+  document.querySelector(".form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (!e.target.querySelector(".form__ok")) e.target.insertAdjacentHTML("beforeend", '<p class="form__ok">Díky, poptávka je odeslaná. V návrhu se nic neodesílá – na webu ji převezme Web3Forms.</p>');
+  });
+</script>
+</body>
+</html>

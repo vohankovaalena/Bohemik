@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Varianta 7 · Doporučená – bohemik.</title>
+<link rel="stylesheet" href="../assets/base.css">
+<style>
+  /* Doporučená kombinace:
+     základ = varianta 1 (podle PDF), struktura a filtr referencí = varianta 4,
+     pruh se servisní linkou = varianta 3, ilustrace v kariéře = varianta 5.
+     Jen jedno písmo (Clash Display), hostované přímo na webu. */
+  body { background: var(--bezova); color: var(--cerna); font: 500 18px/1.6 var(--clash); }
+  .wrap { width: min(1200px, 100% - 48px); margin-inline: auto; }
+  h1, h2, h3 { font-weight: 700; letter-spacing: -0.015em; line-height: 1.1; }
+  .h2 { font-size: clamp(34px, 4vw, 52px); }
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 15px 24px; border-radius: 12px; font: 600 17px/1 var(--clash); text-decoration: none; border: 2px solid var(--cerna); transition: background .2s, color .2s, border-color .2s; }
+  .btn--dark { background: var(--cerna); color: var(--bezova); }
+  .btn--dark:hover { background: var(--hneda); border-color: var(--hneda); }
+  .btn--line:hover { background: var(--cerna); color: var(--bezova); }
+  .link { font-weight: 700; color: var(--hneda); text-decoration: none; }
+  .link:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+  /* Hlavička */
+  .header { position: sticky; top: 0; z-index: 20; background: rgba(237, 235, 232, .94); backdrop-filter: blur(8px); }
+  .header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 22px 0; }
+  .header .logo { font-size: clamp(38px, 4.6vw, 58px); }
+  .nav { display: flex; align-items: center; gap: 34px; }
+  .nav a { font-weight: 700; font-size: 19px; text-decoration: none; position: relative; }
+  .nav a:not(.nav__hot):not(.ig)::after { content: ""; position: absolute; left: 0; right: 100%; bottom: -4px; height: 3px; background: var(--cervena); transition: right .25s; }
+  .nav a:hover::after { right: 0 !important; }
+  .nav__hot { font-size: 15px !important; font-weight: 600 !important; padding: 9px 14px; border-radius: 10px; background: var(--cerna); color: var(--bezova); }
+  .nav__hot b { color: var(--cervena); }
+  .nav .ig svg { width: 26px; height: 26px; display: block; }
+
+  /* Hero – podle PDF, box doplněný o tlačítka */
+  .hero { position: relative; height: min(76vh, 700px); min-height: 520px; }
+  .hero > img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 62%; }
+  .hero__box { position: absolute; top: 44px; right: max(24px, calc((100% - 1200px) / 2)); width: min(600px, 100% - 48px); background: rgba(194, 206, 214, .94); padding: 30px 34px 32px; border-radius: 4px; }
+  .hero__box h1 { font-size: clamp(22px, 2.3vw, 30px); line-height: 1.3; }
+  .hero__cta { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
+
+  /* Pás log */
+  .clients { display: flex; align-items: center; gap: 40px; padding: 30px 0; }
+  .clients__label { flex: none; font-weight: 700; font-size: 20px; }
+  .clients .marquee { flex: 1; }
+  .clients .marquee__track { gap: 76px; }
+  .clients img { height: 60px; width: auto; }
+
+  /* O nás – text z PDF rozdělený do tří oblastí */
+  .section { padding: 110px 0; }
+  [id] { scroll-margin-top: 110px; }
+  .about__head { text-align: center; max-width: 860px; margin: 0 auto 56px; }
+  .about__head p { margin-top: 18px; font-size: 20px; }
+  .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .pillar { background: var(--bila); border-radius: 22px; padding: 32px 30px 30px; display: flex; flex-direction: column; text-decoration: none; transition: transform .25s, box-shadow .25s; }
+  .pillar:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(37, 37, 37, .09); }
+  .pillar__no { font-weight: 600; color: var(--cervena); font-size: 15px; }
+  .pillar h3 { font-size: 27px; margin: 34px 0 10px; }
+  .pillar p { font-size: 17px; color: #4a4a4a; }
+  .pillar .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 16px 0 22px; }
+  .pillar .tags span { background: var(--bezova); border-radius: 999px; padding: 5px 12px; font-size: 14px; font-weight: 600; }
+  .pillar .link { margin-top: auto; }
+  .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 24px; }
+  .fact { background: var(--modra); border-radius: 22px; padding: 34px 24px; text-align: center; font-weight: 700; font-size: 21px; line-height: 1.3; }
+  .fact strong { display: block; color: var(--cervena); font-size: clamp(48px, 5vw, 68px); line-height: 1; margin-bottom: 8px; letter-spacing: -0.03em; }
+  .slogan { text-align: center; font-weight: 700; font-size: clamp(26px, 3.2vw, 40px); margin-top: 90px; }
+
+  /* Reference – mřížka 3×2 z PDF + filtr z varianty 4 */
+  .refs__head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: 40px; }
+  .tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+  .tabs button { font: 600 15px/1 var(--clash); padding: 11px 18px; border-radius: 999px; border: 2px solid var(--cerna); background: transparent; color: var(--cerna); cursor: pointer; }
+  .tabs button:hover { background: rgba(37, 37, 37, .06); }
+  .tabs button[aria-pressed="true"] { background: var(--cerna); color: var(--bezova); }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px 32px; }
+  .ref { text-decoration: none; display: block; }
+  .ref[hidden] { display: none; }
+  .ref__img { position: relative; aspect-ratio: 1; overflow: hidden; border-radius: 4px; }
+  .ref__img img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
+  .ref__cat { position: absolute; top: 14px; left: 14px; background: var(--bezova); border-radius: 6px; padding: 5px 10px; font-size: 13px; font-weight: 600; }
+  .ref__info { position: absolute; inset: auto 0 0 0; background: rgba(194, 206, 214, .96); padding: 18px 20px; font-size: 16px; line-height: 1.45; transform: translateY(101%); transition: transform .3s; }
+  .ref__info small { display: block; font-weight: 600; color: var(--hneda); font-size: 13px; margin-bottom: 2px; }
+  .ref:hover .ref__img img, .ref:focus-visible .ref__img img { transform: scale(1.04); }
+  .ref:hover .ref__info, .ref:focus-visible .ref__info { transform: none; }
+  .ref h3 { font-size: 23px; margin-top: 16px; }
+  .ref h3::after { content: " →"; color: var(--cervena); opacity: 0; transition: opacity .2s; }
+  .ref:hover h3::after { opacity: 1; }
+  .empty { padding: 40px; background: var(--bila); border-radius: 18px; text-align: center; }
+  .refs__more { margin-top: 50px; text-align: center; }
+
+  /* Servisní pruh – z varianty 3 */
+  .hotline { background: var(--cerna); color: var(--bezova); }
+  .hotline .wrap { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 32px; padding: 40px 0; }
+  .hotline img { height: 120px; width: auto; filter: brightness(0) invert(.92); opacity: .9; }
+  .hotline h2 { font-size: clamp(24px, 2.6vw, 34px); }
+  .hotline p { color: rgba(237, 235, 232, .7); font-size: 17px; margin-top: 4px; }
+  .hotline a { font-weight: 700; font-size: clamp(26px, 3vw, 42px); color: var(--cervena); text-decoration: none; white-space: nowrap; letter-spacing: -0.01em; }
+  .hotline a:hover { color: var(--bezova); }
+
+  /* Kariéra – ilustrace z varianty 5 */
+  .career { background: var(--modra); border-radius: 30px; padding: 60px 56px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; overflow: hidden; }
+  .career > div:first-child { padding-bottom: 56px; }
+  .career .h2 { margin-bottom: 14px; }
+  .career ul { margin: 18px 0 30px; }
+  .career li a { display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 2px solid rgba(37, 37, 37, .14); text-decoration: none; font-weight: 700; font-size: 20px; }
+  .career li a span { font-weight: 500; font-size: 15px; color: #4a4a4a; }
+  .career li a:hover { color: var(--hneda); }
+  .career__ilu { display: flex; align-items: flex-end; justify-content: center; min-width: 0; }
+  .career__ilu img { width: 33%; height: auto; max-height: 340px; object-fit: contain; object-position: bottom; transition: transform .35s cubic-bezier(.3, 1.6, .6, 1); }
+  .career__ilu img:hover { transform: translateY(-10px) rotate(-3deg); }
+
+  /* Výzva ke kontaktu */
+  .cta { text-align: center; }
+  .cta p { font-size: 20px; margin: 16px auto 30px; max-width: 620px; }
+  .cta .hero__cta { justify-content: center; }
+
+  /* Patička */
+  .footer { background: var(--cerna); color: var(--bezova); padding: 72px 0 100px; font-size: 16px; }
+  .footer .logo { font-size: 46px; }
+  .footer__grid { display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr; gap: 32px; }
+  .footer h4 { font-weight: 600; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--modra); margin-bottom: 12px; }
+  .footer a { text-decoration: none; }
+  .footer a:hover { color: var(--cervena); }
+  .footer__legal { margin-top: 56px; padding-top: 20px; border-top: 1px solid rgba(237, 235, 232, .2); display: flex; justify-content: space-between; gap: 16px; font-size: 14px; color: rgba(237, 235, 232, .65); flex-wrap: wrap; }
+
+  @media (max-width: 960px) {
+    .pillars, .facts, .grid, .career, .footer__grid { grid-template-columns: 1fr; }
+    .grid { gap: 32px; }
+    .ref__info { position: static; transform: none; }
+    .hotline .wrap { grid-template-columns: 1fr; gap: 12px; }
+    .hotline img { display: none; }
+    .career { padding: 40px 26px 0; }
+    .career > div:first-child { padding-bottom: 0; }
+    .career__ilu img { max-height: 200px; }
+    .career li a { flex-direction: column; gap: 2px; }
+    .section { padding: 80px 0; }
+  }
+  @media (max-width: 860px) {
+    .header .wrap { flex-wrap: wrap; padding: 16px 0; }
+    .nav { flex-direction: column; align-items: flex-start; gap: 18px; width: 100%; padding: 10px 0 8px; }
+    .hero { height: auto; min-height: 0; }
+    .hero > img { height: 56vh; }
+    .hero__box { position: static; width: auto; border-radius: 0; padding: 24px; }
+    .clients { flex-direction: column; align-items: flex-start; gap: 14px; }
+    .clients .marquee { width: 100%; }
+    .clients img { height: 46px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header"><div class="wrap">
+  <a class="logo" href="#">bohemik.</a>
+  <button class="nav-toggle" aria-expanded="false" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M3 7h18M3 12h18M3 17h18"/></svg></button>
+  <nav class="nav" data-nav>
+    <a href="#o-nas">o nás</a>
+    <a href="#reference">reference</a>
+    <a href="#kariera">kariéra</a>
+    <a href="#kontakt">kontakt</a>
+    <a class="nav__hot" href="tel:+420725309691"><b>Servis VZT</b> 725 309 691</a>
+    <a class="ig" href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+  </nav>
+</div></header>
+
+<section class="hero">
+  <img src="../assets/img/hero.jpg" alt="Moderní budova s černým obkladem a zahradou za soumraku">
+  <div class="hero__box">
+    <h1>Jsme česká stavební firma. Realizujeme generální dodávky veřejných zakázek a&nbsp;TZB. Zajišťujeme servis VZT.</h1>
+    <div class="hero__cta"><a class="btn btn--dark" href="#reference">Naše reference →</a><a class="btn btn--line" href="#kontakt">Kontakt</a></div>
+  </div>
+</section>
+
+<div class="wrap">
+  <section class="clients" aria-label="Klienti">
+    <span class="clients__label">důvěřují nám:</span>
+    <div class="marquee"><div class="marquee__track">
+      <img src="../assets/img/logos/cnb.png" alt="Česká národní banka"><img src="../assets/img/logos/rakovnik.png" alt="Masarykova nemocnice Rakovník"><img src="../assets/img/logos/slany.png" alt="Královské město Slaný"><img src="../assets/img/logos/motol.png" alt="Fakultní nemocnice Motol a Homolka">
+      <img src="../assets/img/logos/cnb.png" alt=""><img src="../assets/img/logos/rakovnik.png" alt=""><img src="../assets/img/logos/slany.png" alt=""><img src="../assets/img/logos/motol.png" alt="">
+      <img src="../assets/img/logos/cnb.png" alt=""><img src="../assets/img/logos/rakovnik.png" alt=""><img src="../assets/img/logos/slany.png" alt=""><img src="../assets/img/logos/motol.png" alt="">
+      <img src="../assets/img/logos/cnb.png" alt=""><img src="../assets/img/logos/rakovnik.png" alt=""><img src="../assets/img/logos/slany.png" alt=""><img src="../assets/img/logos/motol.png" alt="">
+    </div></div>
+  </section>
+</div>
+
+<section class="section" id="o-nas"><div class="wrap">
+  <div class="about__head">
+    <h2 class="h2">Stavíme, modernizujeme, servisujeme.</h2>
+    <p>Realizujeme stavby, rekonstrukce a přestavby objektů občanské vybavenosti – nemocnic, škol, sportovišť a kulturních institucí.</p>
+  </div>
+  <div class="pillars">
+    <a class="pillar" href="#reference" data-go="vz"><span class="pillar__no">01</span><h3>Veřejné zakázky</h3><p>Jsme generální dodavatel veřejných zakázek pro nemocnice, školy, města a státní instituce.</p><div class="tags"><span>Stavby</span><span>Rekonstrukce</span><span>Přestavby</span></div><span class="link">Reference veřejných zakázek →</span></a>
+    <a class="pillar" href="#reference" data-go="tzb"><span class="pillar__no">02</span><h3>Zakázky TZB</h3><p>Dodávka a montáž technického zařízení budov včetně souvisejících stavebních prací.</p><div class="tags"><span>VZT</span><span>Chlazení</span><span>MaR</span><span>ZTI</span></div><span class="link">Reference TZB →</span></a>
+    <a class="pillar" href="#servis"><span class="pillar__no">03</span><h3>Servis VZT</h3><p>Zajišťujeme servis vzduchotechniky na námi realizovaných zakázkách.</p><div class="tags"><span>Servisní dispečink</span></div><span class="link">Servis →</span></a>
+  </div>
+  <div class="facts">
+    <div class="fact"><strong>30+</strong>realizovaných zakázek</div>
+    <div class="fact"><strong>xx</strong>zaměstnanců</div>
+    <div class="fact"><strong>xx</strong>let na trhu</div>
+  </div>
+</div></section>
+
+<section class="section" id="reference" style="padding-top:0"><div class="wrap">
+  <div class="refs__head">
+    <h2 class="h2">reference:</h2>
+    <div class="tabs" role="group" aria-label="Filtr referencí">
+      <button aria-pressed="true" data-f="vse">Vše</button><button aria-pressed="false" data-f="vz">Veřejné zakázky</button><button aria-pressed="false" data-f="tzb">TZB</button><button aria-pressed="false" data-f="servis">Servis</button>
+    </div>
+  </div>
+  <div class="grid">
+    <a class="ref" href="#" data-c="vz"><div class="ref__img"><img src="../assets/img/ref/cnb.jpg" alt=""><span class="ref__cat">Veřejné zakázky</span><div class="ref__info"><small>2020–dosud</small>Výměna VZT jednotek, chlazení centrály, bezbariérový vstup</div></div><h3>ČNB Praha</h3></a>
+    <a class="ref" href="#" data-c="tzb"><div class="ref__img"><img src="../assets/img/ref/planetarium.jpg" alt=""><span class="ref__cat">TZB</span><div class="ref__info"><small>2025</small>Rekonstrukce VZT, klimatizace, vytápění a MaR</div></div><h3>Planetárium Praha</h3></a>
+    <a class="ref" href="#" data-c="vz"><div class="ref__img"><img src="../assets/img/ref/homolka.jpg" alt=""><span class="ref__cat">Veřejné zakázky</span><div class="ref__info"><small>2021–dosud</small>Stavební úpravy pracovišť včetně technologií</div></div><h3>Nemocnice Na Homolce</h3></a>
+    <a class="ref" href="#" data-c="vz"><div class="ref__img"><img src="../assets/img/ref/bazen-kralupy.jpg" alt=""><span class="ref__cat">Veřejné zakázky</span><div class="ref__info"><small>2022–2023</small>Rekonstrukce plaveckého bazénu, III. etapa</div></div><h3>Bazén Kralupy</h3></a>
+    <a class="ref" href="#" data-c="tzb"><div class="ref__img"><img src="../assets/img/ref/ntm.jpg" alt=""><span class="ref__cat">TZB</span><div class="ref__info"><small>2024</small>Doplnění chlazení ve 2. a 3. NP</div></div><h3>NTM Praha</h3></a>
+    <a class="ref" href="#" data-c="vz"><div class="ref__img"><img src="../assets/img/ref/rakovnik.jpg" alt=""><span class="ref__cat">Veřejné zakázky</span><div class="ref__info"><small>2022–2023</small>Rekonstrukce akutní péče</div></div><h3>Masarykova nemocnice Rakovník</h3></a>
+  </div>
+  <p class="empty" hidden>Reference servisních zakázek doplníme. Servisní dispečink: <a class="link" href="tel:+420725309691">+420 725 309 691</a></p>
+  <div class="refs__more"><a class="btn btn--line" href="#">Všechny reference →</a></div>
+</div></section>
+
+<section class="hotline" id="servis"><div class="wrap">
+  <img src="../assets/img/ilu/vzt.png" alt="">
+  <div><h2>Servisní dispečink VZT</h2><p>Servis vzduchotechniky na námi realizovaných zakázkách · <a style="font-size:inherit;color:inherit;text-decoration:underline" href="mailto:servis@bohemik.cz">servis@bohemik.cz</a></p></div>
+  <a href="tel:+420725309691">+420 725 309 691</a>
+</div></section>
+
+<section class="section" id="kariera"><div class="wrap">
+  <div class="career">
+    <div>
+      <h2 class="h2">Hledáme nové kolegy</h2>
+      <p>Menší tým, pestrá práce na zajímavých stavbách a podpora v dalším růstu.</p>
+      <ul>
+        <li><a href="#">Stavbyvedoucí <span>Středočeský kraj →</span></a></li>
+        <li><a href="#">Rozpočtář / přípravář zakázek <span>Středočeský kraj →</span></a></li>
+        <li><a href="#">Instalatér – topenář <span>Středočeský kraj →</span></a></li>
+      </ul>
+      <a class="btn btn--dark" href="#">Všechny pozice</a>
+    </div>
+    <div class="career__ilu" aria-hidden="true"><img src="../assets/img/ilu/helma.png" alt=""><img src="../assets/img/ilu/boss.png" alt=""><img src="../assets/img/ilu/naradi.png" alt=""></div>
+  </div>
+</div></section>
+
+<section class="section cta" id="kontakt" style="padding-top:0"><div class="wrap">
+  <h2 class="h2">Máte stavbu nebo zakázku TZB?</h2>
+  <p>Napište nám přes formulář nebo zavolejte. Ozveme se co nejdříve.</p>
+  <div class="hero__cta"><a class="btn btn--dark" href="#">Kontaktní formulář →</a><a class="btn btn--line" href="tel:+420326722707">+420 326 722 707</a></div>
+</div></section>
+
+<footer class="footer"><div class="wrap">
+  <div class="footer__grid">
+    <div><a class="logo" href="#">bohemik.</a></div>
+    <div><h4>Kancelář</h4>Pražská 636<br>263 01 Dobříš<br><a href="tel:+420326722707">+420 326 722 707</a><br><a href="mailto:info@bohemik.cz">info@bohemik.cz</a></div>
+    <div><h4>Servis VZT</h4><a href="tel:+420725309691">+420 725 309 691</a><br><a href="mailto:servis@bohemik.cz">servis@bohemik.cz</a></div>
+    <div><h4>Web</h4><a href="#o-nas">o nás</a><br><a href="#reference">reference</a><br><a href="#kariera">kariéra</a><br><a href="#kontakt">kontakt</a><br><a href="#">Instagram ↗</a></div>
+  </div>
+  <div class="footer__legal"><span>Bohemik s.r.o. · IČ 24265021 · DIČ CZ24265021</span><a href="#">Ochrana osobních údajů</a></div>
+</div></footer>
+
+<script src="../assets/base.js"></script>
+<script>
+  // Filtr referencí; dlaždice „Veřejné zakázky“ a „TZB“ v sekci O nás rovnou nastaví filtr
+  const btns = document.querySelectorAll(".tabs button");
+  const filter = (f) => {
+    let shown = 0;
+    btns.forEach((x) => x.setAttribute("aria-pressed", String(x.dataset.f === f)));
+    document.querySelectorAll(".ref").forEach((r) => { r.hidden = f !== "vse" && r.dataset.c !== f; if (!r.hidden) shown++; });
+    document.querySelector(".empty").hidden = shown > 0;
+  };
+  btns.forEach((b) => b.addEventListener("click", () => filter(b.dataset.f)));
+  document.querySelectorAll("[data-go]").forEach((a) => a.addEventListener("click", () => filter(a.dataset.go)));
+</script>
+</body>
+</html>

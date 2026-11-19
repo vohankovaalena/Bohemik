@@ -1,0 +1,7 @@
+# Podklady od klienta nepatří do veřejného repozitáře
+documentsFromBohemik/
+
+# Lokální nastavení
+.claude/settings.local.json
+.DS_Store
+Thumbs.db

@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kariéra | bohemik.</title>
+<meta name="description" content="Volná pracovní místa v Bohemiku: stavbyvedoucí, rozpočtář / přípravář zakázek, instalatér / topenář. Středočeský kraj, zázemí v Dobříši.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="../assets/base.css?v=2026-11-24-2">
+<link rel="stylesheet" href="../assets/site.css?v=2026-11-24-2">
+<style>
+  .page-head .btn { margin-top: 30px; }
+
+  /* Proč k nám */
+  .perks { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .perk { background: var(--bila); border-radius: 26px; padding: 26px 24px 28px; }
+  .perk img { height: 130px; width: auto; margin-bottom: 18px; }
+  .perk h3 { font-size: 22px; }
+  .perk p { margin-top: 8px; font-size: 16px; color: #4a4a4a; line-height: 1.5; }
+
+  /* Pozice */
+  .jobs__head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: 36px; }
+  .jobs { display: grid; gap: 24px; }
+  .job { background: var(--bila); border-radius: 30px; padding: 40px 44px; display: grid; grid-template-columns: 170px 1fr; gap: 40px; align-items: start; }
+  .job__ilu { display: grid; place-items: start center; }
+  .job__ilu img { height: 250px; width: auto; max-width: 100%; object-fit: contain; }
+  .job__meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+  .job__meta span { background: var(--bezova); border-radius: 999px; padding: 5px 12px; font-size: 14px; font-weight: 600; }
+  .job__meta span:first-child { background: var(--cervena); color: var(--bila); }
+  .job h3 { font-size: clamp(28px, 3vw, 40px); }
+  .job > div > p { margin-top: 12px; font-size: 18px; max-width: 760px; }
+  .job details { margin-top: 22px; border-top: 2px solid var(--bezova); }
+  .job summary { cursor: pointer; list-style: none; padding: 16px 0 0; font-weight: 700; color: var(--hneda); }
+  .job summary::-webkit-details-marker { display: none; }
+  .job summary::after { content: " ↓"; }
+  .job details[open] summary::after { content: " ↑"; }
+  .job__cols { display: grid; grid-template-columns: 1fr 1fr; gap: 34px; margin-top: 18px; }
+  .job__cols h4 { font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--hneda); margin-bottom: 10px; }
+  .job__cols li { position: relative; padding: 5px 0 5px 22px; font-size: 16px; line-height: 1.45; }
+  .job__cols li::before { content: ""; position: absolute; left: 2px; top: 13px; width: 9px; height: 9px; border-radius: 2px; background: var(--cervena); }
+  .job__btns { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 26px; }
+
+  /* Nenašli jste pozici */
+  .open { background: var(--modra); border-radius: 30px; padding: 56px 56px 0; display: grid; grid-template-columns: 1.3fr 1fr; gap: 40px; overflow: hidden; }
+  .open > div:first-child { padding-bottom: 56px; }
+  .open p { margin-top: 16px; font-size: 19px; max-width: 560px; }
+  .open__who { margin-top: 26px; font-size: 17px; line-height: 1.5; }
+  .open__who b { display: block; font-size: 20px; }
+  .open__who a { font-weight: 700; text-decoration: none; }
+  .open__who a:hover { color: var(--hneda); }
+  .open__ilu { display: flex; align-items: flex-end; justify-content: center; gap: 4%; min-width: 0; }
+  .open__ilu img { width: 42%; max-height: 330px; object-fit: contain; object-position: bottom; }
+
+  @media (max-width: 1100px) { .perks { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 960px) {
+    .job { grid-template-columns: 1fr; padding: 30px 26px; gap: 10px; }
+    .job__ilu { place-items: start; }
+    .job__ilu img { height: 150px; }
+    .job__cols, .open { grid-template-columns: 1fr; }
+    .open { padding: 40px 26px 0; }
+    .open > div:first-child { padding-bottom: 0; }
+    .open__ilu img { max-height: 200px; }
+  }
+  @media (max-width: 560px) { .perks { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<header class="header"><div class="wrap">
+  <a class="logo" href="../">bohemik.</a>
+  <button class="nav-toggle" aria-expanded="false" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M3 7h18M3 12h18M3 17h18"/></svg></button>
+  <nav class="nav" data-nav>
+    <a href="../#o-nas">o nás</a>
+    <a href="../reference/">reference</a>
+    <a href="./" aria-current="page">kariéra</a>
+    <a href="../kontakt/">kontakt</a>
+    <a class="ig" href="https://www.instagram.com/bohemik.cz/" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+    <a class="btn btn--dark" href="../kontakt/#poptavka">Poptat zakázku</a>
+  </nav>
+</div></header>
+
+<section class="page-head"><div class="wrap">
+  <div>
+    <span class="eyebrow">Kariéra</span>
+    <h1 class="h1">Hledáme parťáky <em>na velké stavby.</em></h1>
+    <p class="lead">Rosteme a hledáme lidi, kteří se chtějí pořád zlepšovat a za kterými ostatní chodí pro radu. Stavíme pro nemocnice, banky i města. V menším týmu, kde má každý své místo.</p>
+    <a class="btn btn--dark" href="#pozice">Volné pozice ↓</a>
+  </div>
+  <div class="page-head__ilu" aria-hidden="true"><img class="ilu-hop" src="../assets/img/ilu/helma.png" alt=""><img class="ilu-hop" src="../assets/img/ilu/boss.png" alt=""><img class="ilu-hop" src="../assets/img/ilu/kalkulacka.png" alt=""></div>
+</div></section>
+
+<section class="section" style="padding-top:50px"><div class="wrap">
+  <div class="perks">
+    <div class="perk"><img class="ilu-hop" src="../assets/img/ilu/cihly.png" alt=""><h3>Stavby, na které budete hrdí</h3><p>Nemocnice, Česká národní banka, školy, sportoviště i kolektory pod Prahou.</p></div>
+    <div class="perk"><img class="ilu-hop" src="../assets/img/ilu/boss.png" alt=""><h3>Menší tým</h3><p>Nerutinní práce v dynamickém kolektivu. Krátká cesta k vedení a žádná zbytečná byrokracie.</p></div>
+    <div class="perk"><img class="ilu-hop" src="../assets/img/ilu/kabel.png" alt=""><h3>Práce i život</h3><p>Hledáme rovnováhu mezi prací a soukromím, například flexibilní pracovní dobou.</p></div>
+    <div class="perk"><img class="ilu-hop" src="../assets/img/ilu/sanony.png" alt=""><h3>Růst a zázemí</h3><p>Školení, podpora při přípravě na autorizaci a nově vybudované zázemí v Dobříši.</p></div>
+  </div>
+</div></section>
+
+<section class="section" id="pozice" style="padding-top:0"><div class="wrap">
+  <div class="jobs__head"><h2 class="h2">volné pozice:</h2><p>Místo výkonu práce: Středočeský kraj, zázemí v Dobříši.</p></div>
+  <div class="jobs">
+
+    <article class="job" id="stavbyvedouci">
+      <div class="job__ilu" aria-hidden="true"><img class="ilu-hop" src="../assets/img/ilu/helma.png" alt=""></div>
+      <div>
+        <div class="job__meta"><span>Nabídka práce</span><span>Středočeský kraj</span><span>Plný úvazek</span><span>Nástup ihned</span></div>
+        <h3>Stavbyvedoucí</h3>
+        <p>Převezmete řízení a koordinaci stavebních projektů od zahájení až po předání díla. Budete hlídat technologické postupy, harmonogram a finanční plán stavby, komunikovat s investory i dodavateli a vést stavební dokumentaci.</p>
+        <details>
+          <summary>Co očekáváme a co nabízíme</summary>
+          <div class="job__cols">
+            <div><h4>Co od vás očekáváme</h4><ul>
+              <li>VŠ nebo SŠ vzdělání stavebního směru</li>
+              <li>Praxi na obdobné pozici alespoň 2 roky</li>
+              <li>Orientaci v projektové dokumentaci</li>
+              <li>Autorizaci IP00 nebo TP00 výhodou</li>
+              <li>Znalost AutoCAD a KROS výhodou</li>
+              <li>Řidičský průkaz skupiny B</li>
+            </ul></div>
+            <div><h4>Co nabízíme</h4><ul>
+              <li>Nerutinní práci v malém dynamickém kolektivu</li>
+              <li>Smlouvu na dobu neurčitou, plný úvazek</li>
+              <li>20 dní dovolené</li>
+              <li>Školení a podporu při přípravě na autorizaci</li>
+              <li>Služební auto, telefon a notebook</li>
+            </ul></div>
+          </div>
+        </details>
+        <div class="job__btns"><a class="btn btn--dark" href="mailto:info@bohemik.cz?subject=Z%C3%A1jem%20o%20pozici%20stavbyvedouc%C3%AD">Poslat životopis →</a><a class="btn btn--line" href="tel:+420602417831">+420 602 417 831</a></div>
+      </div>
+    </article>
+
+    <article class="job" id="rozpoctar">
+      <div class="job__ilu" aria-hidden="true"><img class="ilu-hop" src="../assets/img/ilu/kalkulacka.png" alt=""></div>
+      <div>
+        <div class="job__meta"><span>Nabídka práce</span><span>Středočeský kraj</span><span>Nástup ihned</span></div>
+        <h3>Rozpočtář / přípravář zakázek</h3>
+        <p>Budete připravovat a oceňovat investiční celky pozemních staveb a technicky i administrativně podporovat realizační tým: od podkladů pro objednávky přes tendrování materiálu a subdodávek po změnové listy.</p>
+        <details>
+          <summary>Co očekáváme a co nabízíme</summary>
+          <div class="job__cols">
+            <div><h4>Co od vás očekáváme</h4><ul>
+              <li>Technické vzdělání s maturitou</li>
+              <li>Praxi na obdobné pozici alespoň 5 let</li>
+              <li>Orientaci v technických výkresech</li>
+              <li>Uživatelskou znalost MS Office</li>
+              <li>Řidičský průkaz B (aktivní řidič)</li>
+              <li>Znalost AutoCAD výhodou, ne podmínkou</li>
+            </ul></div>
+            <div><h4>Co nabízíme</h4><ul>
+              <li>Příjemný mladý kolektiv v rostoucí stavební firmě</li>
+              <li>Nově vybudované administrativní zázemí v Dobříši</li>
+              <li>Další vzdělávání a školení</li>
+              <li>Notebook a telefon</li>
+            </ul></div>
+          </div>
+        </details>
+        <div class="job__btns"><a class="btn btn--dark" href="mailto:info@bohemik.cz?subject=Z%C3%A1jem%20o%20pozici%20rozpo%C4%8Dt%C3%A1%C5%99%20%2F%20p%C5%99%C3%ADprav%C3%A1%C5%99">Poslat životopis →</a><a class="btn btn--line" href="tel:+420602417831">+420 602 417 831</a></div>
+      </div>
+    </article>
+
+    <article class="job" id="instalater-topenar">
+      <div class="job__ilu" aria-hidden="true"><img class="ilu-hop" src="../assets/img/ilu/naradi.png" alt=""></div>
+      <div>
+        <div class="job__meta"><span>Nabídka práce</span><span>Středočeský kraj</span><span>Plný úvazek</span><span>Nástup ihned</span></div>
+        <h3>Instalatér / topenář</h3>
+        <p>Budete montovat, opravovat a udržovat vnitřní i venkovní rozvody vody, kanalizace, plynu a topení a kontrolovat jejich těsnost a funkčnost podle technické dokumentace.</p>
+        <details>
+          <summary>Co očekáváme a co nabízíme</summary>
+          <div class="job__cols">
+            <div><h4>Co od vás očekáváme</h4><ul>
+              <li>Vyučení, SŠ technického směru výhodou</li>
+              <li>Praxi na obdobné pozici alespoň 2 roky</li>
+              <li>Čtení technických výkresů a instalační dokumentace</li>
+              <li>Dodržování zásad BOZP</li>
+              <li>Řidičský průkaz skupiny B</li>
+            </ul></div>
+            <div><h4>Co nabízíme</h4><ul>
+              <li>Příjemné prostředí v mladém kolektivu</li>
+              <li>Smlouvu na dobu neurčitou, plný úvazek</li>
+              <li>20 dní dovolené</li>
+              <li>Školení a další rozvoj</li>
+            </ul></div>
+          </div>
+        </details>
+        <div class="job__btns"><a class="btn btn--dark" href="mailto:info@bohemik.cz?subject=Z%C3%A1jem%20o%20pozici%20instalat%C3%A9r%20%E2%80%93%20topen%C3%A1%C5%99">Poslat životopis →</a><a class="btn btn--line" href="tel:+420602417831">+420 602 417 831</a></div>
+      </div>
+    </article>
+
+  </div>
+</div></section>
+
+<section class="section" style="padding-top:0"><div class="wrap">
+  <div class="open">
+    <div>
+      <h2 class="h2">Nenašli jste svou pozici? <em>Přijďte na kávu.</em></h2>
+      <p>Lidí s kuráží si vážíme. Pokud se vám líbí, jak pracujeme, napište nám, s čím byste nám mohli pomoct. V Bohemiku se pořád něco děje.</p>
+      <div class="open__who"><b>Ing. Alena Bártová</b>nábor, finance a administrativa<br><a href="tel:+420602417831">+420 602 417 831</a> · <a href="mailto:alena.bartova@bohemik.cz">alena.bartova@bohemik.cz</a></div>
+    </div>
+    <div class="open__ilu" aria-hidden="true"><img class="ilu-hop" src="../assets/img/ilu/boss.png" alt=""><img class="ilu-hop" src="../assets/img/ilu/trubky.png" alt=""></div>
+  </div>
+</div></section>
+
+<div class="parade" aria-hidden="true">
+  <img class="ilu-hop" src="../assets/img/ilu/sanony.png" alt=""><img class="ilu-hop" src="../assets/img/ilu/kalkulacka.png" alt=""><img class="ilu-hop" src="../assets/img/ilu/helma.png" alt=""><img class="ilu-hop" src="../assets/img/ilu/cihly.png" alt=""><img class="ilu-hop" src="../assets/img/ilu/trubky.png" alt=""><img class="ilu-hop" src="../assets/img/ilu/kabel.png" alt=""><img class="ilu-hop" src="../assets/img/ilu/naradi.png" alt=""><img class="ilu-hop" src="../assets/img/ilu/vzt.png" alt=""><img class="ilu-hop" src="../assets/img/ilu/boss.png" alt="">
+</div>
+<footer class="footer"><div class="wrap">
+  <div class="footer__grid">
+    <div><a class="logo" href="../">bohemik.</a><p>Česká stavební firma z Dobříše. Generální dodávky veřejných zakázek a TZB.</p></div>
+    <div><h4>Kancelář</h4>Pražská 636<br>263 01 Dobříš<br><a href="tel:+420326722707">+420 326 722 707</a><br><a href="mailto:info@bohemik.cz">info@bohemik.cz</a></div>
+    <div><h4>Web</h4><a href="../#o-nas">o nás</a><br><a href="../reference/">reference</a><br><a href="./">kariéra</a><br><a href="../kontakt/">kontakt</a></div>
+    <div><h4>Sledujte nás</h4><a href="https://www.instagram.com/bohemik.cz/">Instagram ↗</a><br><a href="https://www.facebook.com/Bohemikcz">Facebook ↗</a><br><a href="https://www.linkedin.com/company/bohemik">LinkedIn ↗</a></div>
+  </div>
+  <div class="footer__legal"><span>Bohemik s.r.o. · IČ 24265021 · DIČ CZ24265021</span><a href="#">Ochrana osobních údajů</a></div>
+</div></footer>
+
+<script src="../assets/site.js?v=2026-11-24-2"></script>
+<script>
+  // Odkaz z hlavní stránky na konkrétní pozici ji rovnou rozbalí
+  const job = location.hash && document.querySelector(`.job${location.hash} details`);
+  if (job) job.open = true;
+</script>
+</body>
+</html>

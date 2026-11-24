@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kontakt | bohemik.</title>
+<meta name="description" content="Bohemik s.r.o., Pražská 636, 263 01 Dobříš. Tel. +420 326 722 707, info@bohemik.cz. Poptávka stavby nebo zakázky TZB.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="../assets/base.css?v=2026-11-24-2">
+<link rel="stylesheet" href="../assets/site.css?v=2026-11-24-2">
+<style>
+  /* Kontaktní karty, v každé postavička */
+  .contacts { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .box { position: relative; background: var(--bila); border-radius: 26px; padding: 34px 36px 36px; min-height: 250px; overflow: hidden; font-size: 17px; line-height: 1.6; }
+  .box--blue { background: var(--modra); }
+  .box h2 { font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--hneda); margin-bottom: 14px; }
+  .box .big { display: block; font-weight: 700; font-size: clamp(24px, 2.4vw, 32px); line-height: 1.25; text-decoration: none; }
+  .box a.big:hover { color: var(--hneda); }
+  .box p { margin-top: 14px; max-width: 64%; }
+  .box dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 18px; max-width: 70%; }
+  .box dt { color: #666; }
+  .box dd { margin: 0; font-weight: 600; }
+  .box > img { position: absolute; right: 26px; bottom: -6px; height: 190px; width: auto; }
+  .box .link { display: inline-block; margin-top: 16px; }
+
+  /* Poptávkový formulář */
+  .ask { background: var(--cerna); color: var(--bezova); }
+  .ask .wrap { display: grid; grid-template-columns: 1fr 1.2fr; gap: 70px; }
+  .ask .eyebrow { color: var(--modra); }
+  .ask p { color: rgba(237, 235, 232, .8); font-size: 19px; margin-top: 22px; max-width: 460px; }
+  .ask__ilu { display: flex; align-items: flex-end; gap: 10px; margin-top: 44px; }
+  .ask__ilu img { height: 200px; width: auto; filter: brightness(0) invert(.92); opacity: .9; }
+  .form { background: var(--bezova); color: var(--cerna); border-radius: 26px; padding: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 18px 16px; }
+  .form label { display: grid; gap: 6px; font-weight: 600; font-size: 15px; }
+  .form .full { grid-column: 1 / -1; }
+  .form input, .form textarea { font: 500 17px/1.4 var(--clash); color: var(--cerna); background: var(--bila); border: 2px solid transparent; border-radius: 12px; padding: 13px 14px; width: 100%; min-width: 0; }
+  .form input:focus, .form textarea:focus { outline: none; border-color: var(--cerna); }
+  .form textarea { min-height: 120px; resize: vertical; }
+  .form .hint { font-weight: 500; font-size: 13px; color: #666; }
+  .form fieldset { border: 0; padding: 0; margin: 0; }
+  .form legend { font-weight: 600; font-size: 15px; margin-bottom: 8px; }
+  .form .types { display: flex; gap: 8px; flex-wrap: wrap; }
+  .form .types label { display: inline-flex; cursor: pointer; }
+  .form .types input { position: absolute; opacity: 0; width: 1px; }
+  .form .types span { padding: 10px 16px; border-radius: 999px; border: 2px solid var(--cerna); font-size: 15px; }
+  .form .types input:checked + span { background: var(--cerna); color: var(--bezova); }
+  .form .types input:focus-visible + span { outline: 3px solid var(--cervena); outline-offset: 2px; }
+  .form .form__consent { display: flex; align-items: flex-start; gap: 12px; font-weight: 500; font-size: 15px; line-height: 1.45; cursor: pointer; }
+  .form .form__consent input { appearance: none; flex: none; width: 24px; height: 24px; padding: 0; margin: 0; border: 2px solid var(--cerna); border-radius: 7px; background: var(--bila); cursor: pointer; display: grid; place-items: center; }
+  .form .form__consent input::after { content: ""; width: 7px; height: 12px; border: solid var(--bila); border-width: 0 3px 3px 0; transform: translateY(-2px) rotate(45deg); opacity: 0; }
+  .form .form__consent input:checked { background: var(--cervena); border-color: var(--cervena); }
+  .form .form__consent input:checked::after { opacity: 1; }
+  .form .form__consent input:focus-visible { outline: 3px solid var(--cervena); outline-offset: 2px; }
+  .form__send { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+  .form__ok { grid-column: 1 / -1; background: var(--modra); border-radius: 12px; padding: 14px 16px; font-weight: 600; }
+
+  @media (max-width: 960px) {
+    .contacts, .ask .wrap { grid-template-columns: 1fr; }
+    .ask .wrap { gap: 40px; }
+    .ask__ilu { display: none; }
+  }
+  @media (max-width: 860px) {
+    .form { grid-template-columns: 1fr; padding: 26px 20px; }
+    .box { padding: 28px 24px 30px; }
+    .box > img { height: 130px; right: 14px; }
+    .box p, .box dl { max-width: 72%; }
+  }
+  @media (max-width: 480px) {
+    .box > img { display: none; }
+    .box p, .box dl { max-width: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header"><div class="wrap">
+  <a class="logo" href="../">bohemik.</a>
+  <button class="nav-toggle" aria-expanded="false" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M3 7h18M3 12h18M3 17h18"/></svg></button>
+  <nav class="nav" data-nav>
+    <a href="../#o-nas">o nás</a>
+    <a href="../reference/">reference</a>
+    <a href="../kariera/">kariéra</a>
+    <a href="./" aria-current="page">kontakt</a>
+    <a class="ig" href="https://www.instagram.com/bohemik.cz/" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+    <a class="btn btn--dark" href="#poptavka">Poptat zakázku</a>
+  </nav>
+</div></header>
+
+<section class="page-head"><div class="wrap">
+  <div>
+    <span class="eyebrow">Kontakt</span>
+    <h1 class="h1">Pojďme stavět <em>spolu.</em></h1>
+    <p class="lead">Napište nám, zavolejte, nebo se zastavte v Dobříši. Kávu máme vždycky připravenou.</p>
+  </div>
+  <div class="page-head__ilu" aria-hidden="true"><img class="ilu-hop" src="../assets/img/ilu/kabel.png" alt=""><img class="ilu-hop" src="../assets/img/ilu/boss.png" alt=""><img class="ilu-hop" src="../assets/img/ilu/sanony.png" alt=""></div>
+</div></section>
+
+<section class="section" style="padding-top:40px"><div class="wrap contacts">
+  <div class="box">
+    <h2>Kancelář</h2>
+    <a class="big" href="tel:+420326722707">+420 326 722 707</a>
+    <a class="big" href="mailto:info@bohemik.cz">info@bohemik.cz</a>
+    <p>Pražská 636, 263 01 Dobříš</p>
+    <a class="link" href="https://mapy.com/fnc/v1/search?query=Pra%C5%BEsk%C3%A1%20636%2C%20Dob%C5%99%C3%AD%C5%A1">Ukázat na mapě ↗</a>
+    <img class="ilu-hop" src="../assets/img/ilu/kabel.png" alt="">
+  </div>
+  <div class="box">
+    <h2>Nábor, finance a administrativa</h2>
+    <span class="big">Ing. Alena Bártová</span>
+    <p><a href="tel:+420602417831">+420 602 417 831</a><br><a href="mailto:alena.bartova@bohemik.cz">alena.bartova@bohemik.cz</a></p>
+    <a class="link" href="../kariera/">Volné pozice →</a>
+    <img class="ilu-hop" src="../assets/img/ilu/kalkulacka.png" alt="">
+  </div>
+  <div class="box box--blue">
+    <h2>Fakturační údaje</h2>
+    <dl>
+      <dt>Firma</dt><dd>Bohemik s.r.o.</dd>
+      <dt>IČ</dt><dd>24265021</dd>
+      <dt>DIČ</dt><dd>CZ24265021</dd>
+      <dt>Datová schránka</dt><dd>cj8jye8</dd>
+      <dt>Zápis</dt><dd>Městský soud v Praze, C 198858</dd>
+    </dl>
+    <img class="ilu-hop" src="../assets/img/ilu/sanony.png" alt="">
+  </div>
+  <div class="box" id="servis">
+    <h2>Servis VZT</h2>
+    <a class="big" href="mailto:servis@bohemik.cz">servis@bohemik.cz</a>
+    <p>Servis vzduchotechniky na zařízeních, která jsme sami realizovali. Tel. <a href="tel:+420725309691">+420 725 309 691</a></p>
+    <img class="ilu-hop" src="../assets/img/ilu/vzt.png" alt="">
+  </div>
+</div></section>
+
+<section class="section ask" id="poptavka"><div class="wrap">
+  <div>
+    <span class="eyebrow">Poptávka</span>
+    <h2 class="h2">Připravujete stavbu?</h2>
+    <p>Pošlete nám odkaz na zadávací dokumentaci nebo popište záměr. Ozveme se co nejdříve.</p>
+    <div class="ask__ilu" aria-hidden="true"><img class="ilu-hop" src="../assets/img/ilu/cihly.png" alt=""><img class="ilu-hop" src="../assets/img/ilu/helma.png" alt=""><img class="ilu-hop" src="../assets/img/ilu/trubky.png" alt=""></div>
+  </div>
+  <form class="form" action="https://api.web3forms.com/submit" method="post">
+    <!-- Web3Forms: doplnit přístupový klíč a odebrat blokování odeslání ve skriptu dole -->
+    <input type="hidden" name="access_key" value="DOPLNIT">
+    <input type="hidden" name="subject" value="Poptávka z webu bohemik.cz">
+    <fieldset class="full"><legend>Typ zakázky</legend>
+      <div class="types">
+        <label><input type="radio" name="typ" value="Generální dodávka" checked><span>Generální dodávka</span></label>
+        <label><input type="radio" name="typ" value="TZB"><span>TZB</span></label>
+        <label><input type="radio" name="typ" value="Servis VZT"><span>Servis VZT</span></label>
+        <label><input type="radio" name="typ" value="Jiné"><span>Jiné</span></label>
+      </div>
+    </fieldset>
+    <label>Jméno a příjmení<input name="jmeno" autocomplete="name" required></label>
+    <label>Organizace<input name="organizace" autocomplete="organization"></label>
+    <label>E-mail<input type="email" name="email" autocomplete="email" required></label>
+    <label>Telefon<input type="tel" name="telefon" autocomplete="tel"></label>
+    <label class="full">Odkaz na zadávací dokumentaci <span class="hint">profil zadavatele, NEN, Tender arena…</span><input type="url" name="odkaz" placeholder="https://"></label>
+    <label class="full">Popis záměru<textarea name="zprava" placeholder="Co, kde a kdy chcete stavět"></textarea></label>
+    <label class="full form__consent"><input type="checkbox" name="souhlas" value="ano" required><span>Souhlasím se <a class="link" href="#">zpracováním osobních údajů</a> za účelem vyřízení poptávky.</span></label>
+    <div class="full form__send"><button class="btn btn--dark" type="submit">Odeslat poptávku →</button></div>
+  </form>
+</div></section>
+
+<div class="parade parade--dark" aria-hidden="true">
+  <img class="ilu-hop" src="../assets/img/ilu/sanony.png" alt=""><img class="ilu-hop" src="../assets/img/ilu/kalkulacka.png" alt=""><img class="ilu-hop" src="../assets/img/ilu/helma.png" alt=""><img class="ilu-hop" src="../assets/img/ilu/cihly.png" alt=""><img class="ilu-hop" src="../assets/img/ilu/trubky.png" alt=""><img class="ilu-hop" src="../assets/img/ilu/kabel.png" alt=""><img class="ilu-hop" src="../assets/img/ilu/naradi.png" alt=""><img class="ilu-hop" src="../assets/img/ilu/vzt.png" alt=""><img class="ilu-hop" src="../assets/img/ilu/boss.png" alt="">
+</div>
+<footer class="footer"><div class="wrap">
+  <div class="footer__grid">
+    <div><a class="logo" href="../">bohemik.</a><p>Česká stavební firma z Dobříše. Generální dodávky veřejných zakázek a TZB.</p></div>
+    <div><h4>Kancelář</h4>Pražská 636<br>263 01 Dobříš<br><a href="tel:+420326722707">+420 326 722 707</a><br><a href="mailto:info@bohemik.cz">info@bohemik.cz</a></div>
+    <div><h4>Web</h4><a href="../#o-nas">o nás</a><br><a href="../reference/">reference</a><br><a href="../kariera/">kariéra</a><br><a href="./">kontakt</a></div>
+    <div><h4>Sledujte nás</h4><a href="https://www.instagram.com/bohemik.cz/">Instagram ↗</a><br><a href="https://www.facebook.com/Bohemikcz">Facebook ↗</a><br><a href="https://www.linkedin.com/company/bohemik">LinkedIn ↗</a></div>
+  </div>
+  <div class="footer__legal"><span>Bohemik s.r.o. · IČ 24265021 · DIČ CZ24265021</span><a href="#">Ochrana osobních údajů</a></div>
+</div></footer>
+
+<script src="../assets/site.js?v=2026-11-24-2"></script>
+<script>
+  // Formulář zatím není napojený na Web3Forms (chybí přístupový klíč)
+  document.querySelector(".form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (!e.target.querySelector(".form__ok")) e.target.insertAdjacentHTML("beforeend", '<p class="form__ok">Formulář zatím neodesílá. Napište nám prosím na <a class="link" href="mailto:info@bohemik.cz">info@bohemik.cz</a>.</p>');
+  });
+</script>
+</body>
+</html>

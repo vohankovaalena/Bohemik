@@ -1,4 +1,6 @@
-# Nasazení složky docs/ na GitHub Pages při každém pushi do main
+# Nasazení složky docs/ na GitHub Pages při každém pushi do main.
+# Nahrání a nasazení jsou ve dvou jobech: deploy-pages ve stejném jobu
+# občas nenajde právě nahraný artefakt (actions/deploy-pages#451).
 name: GitHub Pages
 
 on:
@@ -16,16 +18,21 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: docs
+
   deploy:
+    needs: build
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v4
-        with:
-          path: docs
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

@@ -131,7 +131,7 @@ a.card:hover { transform: rotate(-1deg) translateY(-4px); box-shadow: 0 18px 40p
 .parade img { height: clamp(80px, 9vw, 124px); width: auto; margin-bottom: -3px; }
 .parade img:nth-child(odd) { height: clamp(88px, 10vw, 136px); }
 /* Tmavý pruh (Kontakt): navazuje na tmavý formulář, od něj i od patičky ho dělí oranžové čáry */
-.parade--dark { background: var(--cerna); border-top: 3px solid var(--cervena); border-bottom: 3px solid var(--cervena); padding-top: 36px; }
+.parade--dark { background: var(--cerna); border-bottom: 3px solid var(--cervena); padding-top: 36px; }
 .parade--dark img { margin-bottom: 0; filter: brightness(0) invert(.92); }
 
 /* Patička */

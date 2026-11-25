@@ -7,8 +7,8 @@
 <meta name="description" content="Jsme česká stavební firma. Realizujeme generální dodávky veřejných zakázek a TZB. Zajišťujeme servis VZT.">
 <!-- Draft: dokud web neběží na bohemik.cz, nechceme ho ve vyhledávačích. Při spuštění odstranit. -->
 <meta name="robots" content="noindex, nofollow">
-<link rel="stylesheet" href="assets/base.css?v=2026-11-25-1">
-<link rel="stylesheet" href="assets/site.css?v=2026-11-25-1">
+<link rel="stylesheet" href="assets/base.css?v=2026-11-25-2">
+<link rel="stylesheet" href="assets/site.css?v=2026-11-25-2">
 <style>
   /* Hlavní stránka – základ je návrh 7 (templates/varianta-7.html). */
 
@@ -25,7 +25,7 @@
       linear-gradient(90deg, rgba(237,235,232,.3) 0%, rgba(237,235,232,.1) 40%, transparent 60%),
       linear-gradient(0deg, rgba(37,37,37,.4) 0%, transparent 28%); }
   .hero__text { position: absolute; z-index: 2; left: max(24px, calc((100% - 1200px) / 2)); bottom: 56px; width: min(760px, 100% - 48px); }
-  .hero h1 { font-size: clamp(34px, 4.4vw, 66px); line-height: 1.06; }
+  .hero h1 { font-size: clamp(34px, 4.4vw, 66px); line-height: 1.06; text-shadow: 0 0 2px rgba(255,255,255,.55), 0 0 14px rgba(255,255,255,.7), 0 0 34px rgba(255,255,255,.45); } /* jemná bílá záře pro čitelnost na fotce */
   .hero__sub { margin-top: 16px; font-size: clamp(17px, 1.5vw, 21px); max-width: 560px; }
   .hero h1 em { font-style: normal; color: var(--cervena); }
   .hero__cta { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 28px; }
@@ -77,7 +77,8 @@
     /* Na mobilu je fotka nahoře celá a text pod ní */
     .hero { height: auto; }
     .hero__stage { position: relative; aspect-ratio: 3 / 2; }
-    .hero__stage::after { background: linear-gradient(0deg, rgba(237,235,232,.5), transparent 35%); }
+    .hero__stage { overflow: visible; }
+    .hero__stage::after { bottom: -2px; background: linear-gradient(0deg, var(--bezova) 0%, rgba(237,235,232,.92) 12%, rgba(237,235,232,.6) 30%, rgba(237,235,232,.2) 48%, transparent 62%); } /* fotka plynule přechází do béžového pozadí s nadpisem */
     .hero__text { position: static; width: auto; padding: 26px 24px 40px; }
     .hero__now { display: none; }
     .hero h1 br { display: none; } /* zalomení řádků claimu jen na desktopu */
@@ -202,7 +203,7 @@
   <div class="footer__legal"><span>Bohemik s.r.o. · IČ 24265021 · DIČ CZ24265021</span><a href="#">Ochrana osobních údajů</a></div>
 </div></footer>
 
-<script src="assets/site.js?v=2026-11-25-1"></script>
+<script src="assets/site.js?v=2026-11-25-2"></script>
 <script>
   // Hero: prolínání fotek s popiskem a tečkami
   (() => {

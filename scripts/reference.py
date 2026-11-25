@@ -238,7 +238,7 @@ def footer(r):
   <div class="footer__legal"><span>Bohemik s.r.o. · IČ 24265021 · DIČ CZ24265021</span><a href="#">Ochrana osobních údajů</a></div>
 </div></footer>
 
-<script src="{r}assets/site.js?v=2026-11-24-2"></script>"""
+<script src="{r}assets/site.js?v=2026-11-25-1"></script>"""
 
 
 def page(r, title, desc, body, script=""):
@@ -250,8 +250,8 @@ def page(r, title, desc, body, script=""):
 <title>{e(title)}</title>
 <meta name="description" content="{e(desc)}">
 <meta name="robots" content="noindex, nofollow">
-<link rel="stylesheet" href="{r}assets/base.css?v=2026-11-24-2">
-<link rel="stylesheet" href="{r}assets/site.css?v=2026-11-24-2">
+<link rel="stylesheet" href="{r}assets/base.css?v=2026-11-25-1">
+<link rel="stylesheet" href="{r}assets/site.css?v=2026-11-25-1">
 </head>
 <body>
 <!-- Vygenerováno skriptem scripts/reference.py, neupravujte ručně, změny dělejte v datech skriptu. -->

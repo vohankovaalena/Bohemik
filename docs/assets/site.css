@@ -3,7 +3,10 @@
    prolínání fotek v hero z návrhu 8. */
 body { background: var(--bezova); color: var(--cerna); font: 500 18px/1.6 var(--clash); }
 .wrap { width: min(1200px, 100% - 48px); margin-inline: auto; }
-h1, h2, h3 { font-weight: 700; letter-spacing: -0.015em; line-height: 1.1; }
+h1, h2, h3 { font-weight: 700; letter-spacing: .015em; line-height: 1.1; }
+/* Clash Display má v tučném řezu těsné mezery mezi písmeny, proto u tučného textu prostrkáváme */
+h4, b, strong, .nav > a, .link, .btn, .eyebrow, .card .go, .sticker, .ref__info small, .ref__when, .detail__facts dd,
+.clients__label, .fact, .career li a, .job summary, .job__meta span, .open__who a, .box .big, .box dd, .form label, .form legend { letter-spacing: .025em; }
 .h1 { font-size: clamp(40px, 5.4vw, 80px); }
 .h2 { font-size: clamp(34px, 4vw, 52px); }
 .h1 em, .h2 em { font-style: normal; color: var(--cervena); }
